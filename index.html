@@ -36,7 +36,7 @@
         </nav>
 
         <div class="header-actions">
-            <a href="index.html#order" class="btn-header">Заказать</a>
+            <a href="#order" class="btn-header js-open-order">Заказать</a>
         </div>
     </header>
 
@@ -53,7 +53,7 @@
                         <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                 </a>
-                <a href="#order" class="btn-subtle-glow">
+                <a href="#order" class="btn-subtle-glow js-open-order">
                     <span>Оставить заявку</span>
                 </a>
             </div>
@@ -87,7 +87,7 @@
                             <p class="card-desc">Строгая элегантность, минимализм и безупречный классический стиль.</p>
                             <div class="card-actions">
                                 <a href="https://linamya.github.io/kirillandkarina/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
-                                <a href="#" class="btn-card select-btn"
+                                <a href="#" class="btn-card select-btn js-open-order"
                                     data-template="Свадьба «Classic Beige»">Выбрать</a>
                             </div>
                         </div>
@@ -108,7 +108,7 @@
                                 современный шик.</p>
                             <div class="card-actions">
                                 <a href="https://linamya.github.io/shan/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
-                                <a href="#" class="btn-card select-btn"
+                                <a href="#" class="btn-card select-btn js-open-order"
                                     data-template="Свадьба «Kaaly olive»">Выбрать</a>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                             <p class="card-desc">Роскошный дизайн, акцент на изящные анимации и детали.</p>
                             <div class="card-actions">
                                 <a href="https://linamya.github.io/davidandarina/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
-                                <a href="#" class="btn-card select-btn"
+                                <a href="#" class="btn-card select-btn js-open-order"
                                     data-template="Свадьба «Premium Boho»">Выбрать</a>
                             </div>
                         </div>
@@ -196,7 +196,7 @@
                                     <li>Нельзя вносить изменения в структуру сайта</li>
                                 </ul>
                             </div>
-                            <a href="#order" class="tariff-btn-outline select-btn"
+                            <a href="#order" class="tariff-btn-outline select-btn js-open-order"
                                 data-template="Тариф: Базовый">Выбрать базовый</a>
                         </div>
 
@@ -219,7 +219,7 @@
                                     <li>Срок изготовления: 2-4 дня</li>
                                 </ul>
                             </div>
-                            <a href="#order" class="tariff-btn-primary select-btn"
+                            <a href="#order" class="tariff-btn-primary select-btn js-open-order"
                                 data-template="Тариф: Премиальный">Выбрать премиум</a>
                         </div>
 
@@ -240,7 +240,7 @@
                                     <li>Сроки изготовления: 4-6 дней</li>
                                 </ul>
                             </div>
-                            <a href="#order" class="tariff-btn-outline select-btn"
+                            <a href="#order" class="tariff-btn-outline select-btn js-open-order"
                                 data-template="Тариф: Индивидуальный">Выбрать индивидуальный</a>
                         </div>
 
@@ -427,20 +427,24 @@
         </section>
     </div>
 
-    <!-- Модальное окно выбора шаблона / заказа -->
+    <!-- Модальное окно оформления заказа -->
     <div id="orderModal" class="modal-overlay" aria-hidden="true">
         <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
             <button type="button" class="modal-close" id="closeModal" aria-label="Закрыть">✕</button>
-            <h2 id="orderModalTitle" class="modal-title">Оформить заказ</h2>
-            <p class="modal-subtitle">Выбранный шаблон уже подставлен. Заполните данные, и я свяжусь с вами.</p>
-            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST">
+
+            <div class="section-header modal-header">
+                <h2 id="orderModalTitle" class="modal-title">Оформить заказ</h2>
+                <p class="modal-subtitle">Заполните данные,<br>и я свяжусь с вами</p>
+            </div>
+
+            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST" id="orderModalForm">
                 <div class="form-group">
-                    <label>Имя</label>
-                    <input type="text" name="name" placeholder="Например, Анна" required>
+                    <label for="modal-name">Имя</label>
+                    <input id="modal-name" type="text" name="name" placeholder="Например, Анна" required>
                 </div>
                 <div class="form-group">
-                    <label>Мессенджер</label>
-                    <select name="messenger" required>
+                    <label for="modal-messenger">Мессенджер</label>
+                    <select id="modal-messenger" name="messenger" required>
                         <option value="" disabled selected>Выберите мессенджер</option>
                         <option value="Telegram">Telegram</option>
                         <option value="WhatsApp">WhatsApp</option>
@@ -448,17 +452,30 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Ник / телефон</label>
-                    <input type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required>
+                    <label for="modal-contact">Ник / телефон</label>
+                    <input id="modal-contact" type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required>
                 </div>
                 <div class="form-group">
-                    <label>Выбранный шаблон</label>
-                    <input type="text" name="template" id="modal-template-input" readonly>
+                    <label for="modal-tariff">Выбрать тариф</label>
+                    <select name="tariff" id="modal-tariff" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать тариф</option>
+                        <option value="Базовый 2 000 ₽">Базовый 2 000 ₽</option>
+                        <option value="Премиальный 3 000 ₽">Премиальный 3 000 ₽</option>
+                        <option value="Индивидуальный 5 000 ₽">Индивидуальный 5 000 ₽</option>
+                    </select>
                 </div>
-                <button type="submit" class="modal-submit">Отправить заявку</button>
-                <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.4;">
-                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html" style="color: var(--accent);">Политикой конфиденциальности</a>.
-                </p>
+                <div class="form-group">
+                    <label for="modal-template">Выбрать шаблон</label>
+                    <select name="template" id="modal-template" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option>
+                        <option value="Свадьба «Classic Beige»">Свадьба «Classic Beige»</option>
+                        <option value="Свадьба «Kaaly olive»">Свадьба «Kaaly olive»</option>
+                        <option value="Свадьба «Premium Boho»">Свадьба «Premium Boho»</option>
+                        <option value="Другой шаблон из каталога">Другой шаблон из каталога</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary-glow modal-submit"><span>Отправить заявку</span></button>
+                <p class="modal-privacy">Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">Политикой конфиденциальности</a>.</p>
             </form>
         </div>
     </div>
@@ -619,6 +636,78 @@
     initInfiniteCarousel('tariffsTrack', 'tariffsPrev', 'tariffsNext');
     initInfiniteCarousel('reviewsTrack', 'reviewsPrev', 'reviewsNext');
 </script>
+    // ============================================================
+    // МОДАЛЬНОЕ ОКНО ОФОРМЛЕНИЯ ЗАКАЗА
+    // ============================================================
+    (function initOrderModal() {
+        const modal = document.getElementById('orderModal');
+        const closeButton = document.getElementById('closeModal');
+        const form = document.getElementById('orderModalForm');
+        const tariffSelect = document.getElementById('modal-tariff');
+        const templateSelect = document.getElementById('modal-template');
+
+        if (!modal || !closeButton || !form || !tariffSelect || !templateSelect) return;
+
+        let lastFocusedElement = null;
+
+        function openModal({ template = '', tariff = '' } = {}) {
+            lastFocusedElement = document.activeElement;
+            tariffSelect.value = '';
+            templateSelect.value = '';
+
+            if (tariff && Array.from(tariffSelect.options).some(option => option.value === tariff)) {
+                tariffSelect.value = tariff;
+            }
+            if (template && Array.from(templateSelect.options).some(option => option.value === template)) {
+                templateSelect.value = template;
+            }
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('modal-open');
+
+            requestAnimationFrame(() => {
+                const firstInput = document.getElementById('modal-name');
+                if (firstInput) firstInput.focus();
+            });
+        }
+
+        function closeModal() {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('modal-open');
+            if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') lastFocusedElement.focus();
+        }
+
+        document.querySelectorAll('.js-open-order').forEach(button => {
+            button.addEventListener('click', event => {
+                event.preventDefault();
+                const selected = button.dataset.template || '';
+                let tariff = '';
+                let template = selected;
+
+                if (selected.startsWith('Тариф: ')) {
+                    const tariffName = selected.replace('Тариф: ', '').trim();
+                    const tariffMap = {
+                        'Базовый': 'Базовый 2 000 ₽',
+                        'Премиальный': 'Премиальный 3 000 ₽',
+                        'Индивидуальный': 'Индивидуальный 5 000 ₽'
+                    };
+                    tariff = tariffMap[tariffName] || '';
+                    template = '';
+                }
+
+                openModal({ template, tariff });
+            });
+        });
+
+        closeButton.addEventListener('click', closeModal);
+        modal.addEventListener('click', event => { if (event.target === modal) closeModal(); });
+        document.addEventListener('keydown', event => {
+            if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+        });
+    })();
+
 </body>
 
 </html>
