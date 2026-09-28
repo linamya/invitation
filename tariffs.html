@@ -21,6 +21,62 @@
         .dot.active{width:24px;border-radius:4px;background:var(--primary)}
         @media (min-width:768px){.carousel-dots{display:none}}
         @media (max-width:767px){.tariffs-carousel-wrapper{width:100%;padding-left:50px;padding-right:50px}.carousel-arrow{width:40px;height:40px;font-size:28px}.carousel-arrow.prev{left:4px}.carousel-arrow.next{right:4px}}
+
+        /* ФИНАЛЬНАЯ КОРРЕКТИРОВКА МОБИЛЬНОЙ КАРУСЕЛИ ТАРИФОВ */
+        .tariffs-grid {
+            align-items: flex-start !important;
+        }
+
+        .tariff-card {
+            height: auto !important;
+            min-height: 0 !important;
+            align-self: flex-start !important;
+        }
+
+        /* Кнопка отправки заявки — в стиле LYMI, без системной синей кнопки */
+        .modal-submit {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            min-height: 48px;
+            padding: 13px 20px;
+            margin-top: 4px;
+            box-sizing: border-box;
+            border: 1px solid var(--accent, #D6A64D) !important;
+            border-radius: 12px;
+            background: var(--accent, #D6A64D) !important;
+            color: var(--page-bg-color, #0F241D) !important;
+            font-family: 'Inter', sans-serif !important;
+            font-size: 15px;
+            font-weight: 600;
+            line-height: 1.2;
+            cursor: pointer;
+            appearance: none;
+            -webkit-appearance: none;
+            box-shadow: none;
+            text-align: center;
+        }
+
+        .modal-submit:hover {
+            opacity: .9;
+        }
+
+        .modal-submit span {
+            display: inline-block;
+        }
+
+        @media (max-width: 767px) {
+            .tariffs-grid {
+                align-items: flex-start !important;
+            }
+
+            .tariff-card {
+                flex-basis: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+            }
+        }
     </style>
 </head>
 <body>
