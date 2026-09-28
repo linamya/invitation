@@ -1369,17 +1369,25 @@ h4,
     min-width: 0;
     box-sizing: border-box;
     }
+/* Логотип в шапке */
 .logo-link {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: inherit;
+    gap: 8px;
+    text-decoration: none !important;
+    color: var(--header-logo-color) !important;
+    font-size: inherit;
+    line-height: 1;
 }
 
 .logo-link img {
-    width: 72px;
-    height: 72px;
+    width: 42px !important;
+    height: 42px !important;
+    max-width: 42px !important;
+    max-height: 42px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
     object-fit: contain;
     display: block;
+    flex: 0 0 42px;
 }
