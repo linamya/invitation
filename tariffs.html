@@ -7,23 +7,153 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
-        .tariffs-carousel-wrapper { position: relative; max-width: 380px; margin: 0 auto; overflow: hidden; padding: 10px 0 30px; }
-        .tariffs-grid { display: flex; transition: transform 0.4s ease; width: 100%; box-sizing: border-box; touch-action: pan-y; }
-        .tariff-card { flex: 0 0 100%; width: 100%; max-width: 380px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; margin: 0 auto; }
-        @media (min-width: 768px) {
-            .tariffs-carousel-wrapper { max-width: 900px; padding: 10px 40px 30px; }
-            .tariffs-grid { gap: 24px; }
-            .tariff-card { flex: 0 0 calc(50% - 12px); max-width: calc(50% - 12px); margin: 0; }
+        .tariffs-carousel-wrapper {
+            position: relative;
+            max-width: 380px;
+            margin: 0 auto;
+            padding: 10px 46px 30px;
+            box-sizing: border-box;
         }
-        .tariff-card .select-btn { width: 100%; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; text-align: center; border: none; background: var(--primary); color: #fff; transition: opacity 0.2s; box-sizing: border-box; display: block; margin-top: 20px; }
-        .tariff-card .select-btn:hover { opacity: 0.9; }
-        .carousel-arrow { position: absolute; top: 45%; transform: translateY(-50%); background: none; border: none; font-size: 32px; font-weight: 300; color: #111; cursor: pointer; z-index: 10; padding: 10px; }
-        .carousel-arrow.prev { left: -10px; }
-        .carousel-arrow.next { right: -10px; }
-        .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
-        .dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; border: none; cursor: pointer; padding: 0; transition: background 0.2s, width 0.2s; }
-        .dot.active { background: var(--primary); width: 24px; border-radius: 4px; }
-        @media (min-width: 768px) { .carousel-dots { display: none; } .carousel-arrow { display: flex; } .tariffs-carousel-wrapper { padding: 10px 40px 30px; } }
+
+        .tariffs-grid {
+            display: flex;
+            gap: 24px;
+            width: 100%;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            touch-action: pan-x;
+            scroll-snap-type: x mandatory;
+        }
+
+        .tariffs-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tariff-card {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 380px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 0;
+            scroll-snap-align: center;
+        }
+
+        .tariff-card .select-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            border: none;
+            background: var(--primary);
+            color: #fff;
+            transition: opacity 0.2s;
+            box-sizing: border-box;
+            display: block;
+            margin-top: 20px;
+        }
+
+        .tariff-card .select-btn:hover {
+            opacity: 0.9;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: var(--carousel-arrow-bg, #fff);
+            border: 1px solid var(--carousel-arrow-border, #D6A64D);
+            color: var(--carousel-arrow-icon, #D6A64D);
+            font-size: 28px;
+            line-height: 1;
+            cursor: pointer;
+            z-index: 10;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        }
+
+        .carousel-arrow:hover {
+            background: var(--carousel-arrow-hover-bg, #D6A64D);
+            color: var(--carousel-arrow-hover-icon, #fff);
+        }
+
+        .carousel-arrow.prev {
+            left: 0;
+        }
+
+        .carousel-arrow.next {
+            right: 0;
+        }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d1d5db;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: background 0.2s, width 0.2s;
+        }
+
+        .dot.active {
+            background: var(--primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        @media (min-width: 768px) {
+            .tariffs-carousel-wrapper {
+                max-width: 900px;
+                padding: 10px 48px 30px;
+            }
+
+            .tariffs-grid {
+                gap: 24px;
+                scroll-snap-type: x mandatory;
+            }
+
+            .tariff-card {
+                flex: 0 0 calc(50% - 12px);
+                max-width: calc(50% - 12px);
+            }
+
+            .carousel-dots {
+                display: none;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .tariffs-carousel-wrapper {
+                padding-left: 46px;
+                padding-right: 46px;
+            }
+
+            .carousel-arrow {
+                width: 40px;
+                height: 40px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -225,37 +355,143 @@
 
     <script src="script.js"></script>
     <script>
-        const track = document.getElementById('tariffsTrack');
-        const wrapper = track?.parentElement;
-        const cards = track ? Array.from(track.children) : [];
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        const dots = document.querySelectorAll('.dot');
-        let currentIndex = 0;
+        document.addEventListener('DOMContentLoaded', function () {
+            const track = document.getElementById('tariffsTrack');
+            const wrapper = track;
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const dots = document.querySelectorAll('.dot');
 
-        function getStep() {
-            if (!cards.length) return 0;
-            const gap = parseFloat(getComputedStyle(track).gap) || 0;
-            return cards[0].getBoundingClientRect().width + gap;
-        }
+            if (!track || !prevBtn || !nextBtn) return;
 
-        function moveCarousel(direction) {
-            if (!cards.length || !wrapper) return;
-            currentIndex = (currentIndex + direction + cards.length) % cards.length;
-            const step = getStep();
-            const maxScroll = Math.max(0, track.scrollWidth - wrapper.clientWidth);
-            const target = Math.min(currentIndex * step, maxScroll);
-            wrapper.scrollTo({ left: target, behavior: 'smooth' });
-            dots.forEach(d => d.classList.remove('active'));
-            if (dots[currentIndex]) dots[currentIndex].classList.add('active');
-        }
+            const originalCards = Array.from(track.children);
+            const total = originalCards.length;
 
-        nextBtn?.addEventListener('click', () => moveCarousel(1));
-        prevBtn?.addEventListener('click', () => moveCarousel(-1));
-        dots.forEach((dot, index) => dot.addEventListener('click', () => {
-            currentIndex = index;
-            moveCarousel(0);
-        }));
+            if (total <= 1) return;
+
+            // Создаём копии с двух сторон, чтобы переход был бесшовным.
+            const beforeClones = originalCards.map(card => card.cloneNode(true));
+            const afterClones = originalCards.map(card => card.cloneNode(true));
+
+            beforeClones.reverse().forEach(card => track.insertBefore(card, track.firstChild));
+            afterClones.forEach(card => track.appendChild(card));
+
+            let currentIndex = total;
+            let isMoving = false;
+            let normalizeTimer;
+
+            function getTargetLeft(index) {
+                const card = track.children[index];
+                if (!card) return 0;
+
+                return Math.max(
+                    0,
+                    card.offsetLeft - (wrapper.clientWidth - card.offsetWidth) / 2
+                );
+            }
+
+            function moveTo(index, smooth = true) {
+                const target = getTargetLeft(index);
+
+                wrapper.scrollTo({
+                    left: target,
+                    behavior: smooth ? 'smooth' : 'auto'
+                });
+            }
+
+            function updateDots() {
+                const realIndex = ((currentIndex - total) % total + total) % total;
+
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === realIndex);
+                });
+            }
+
+            function normalize() {
+                if (currentIndex >= total * 2) {
+                    currentIndex -= total;
+                    moveTo(currentIndex, false);
+                } else if (currentIndex < total) {
+                    currentIndex += total;
+                    moveTo(currentIndex, false);
+                }
+
+                updateDots();
+            }
+
+            requestAnimationFrame(() => {
+                moveTo(currentIndex, false);
+                updateDots();
+            });
+
+            function go(direction) {
+                if (isMoving) return;
+
+                isMoving = true;
+                currentIndex += direction;
+                updateDots();
+                moveTo(currentIndex, true);
+
+                clearTimeout(normalizeTimer);
+                normalizeTimer = setTimeout(() => {
+                    normalize();
+                    isMoving = false;
+                }, 500);
+            }
+
+            nextBtn.addEventListener('click', () => go(1));
+            prevBtn.addEventListener('click', () => go(-1));
+
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    if (isMoving) return;
+
+                    currentIndex = total + index;
+                    updateDots();
+                    moveTo(currentIndex, true);
+
+                    clearTimeout(normalizeTimer);
+                    normalizeTimer = setTimeout(() => {
+                        normalize();
+                        isMoving = false;
+                    }, 500);
+                });
+            });
+
+            // После ручного свайпа центрируем ближайшую карточку.
+            let scrollTimer;
+
+            wrapper.addEventListener('scroll', () => {
+                if (isMoving) return;
+
+                clearTimeout(scrollTimer);
+
+                scrollTimer = setTimeout(() => {
+                    let closestIndex = currentIndex;
+                    let closestDistance = Infinity;
+
+                    Array.from(track.children).forEach((card, index) => {
+                        const distance = Math.abs(
+                            wrapper.scrollLeft - getTargetLeft(index)
+                        );
+
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestIndex = index;
+                        }
+                    });
+
+                    currentIndex = closestIndex;
+                    moveTo(currentIndex, true);
+
+                    setTimeout(normalize, 450);
+                }, 100);
+            });
+
+            window.addEventListener('resize', () => {
+                moveTo(currentIndex, false);
+            });
+        });
     </script>
 </body>
 </html>
