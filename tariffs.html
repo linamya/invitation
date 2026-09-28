@@ -46,7 +46,7 @@
         </div>
     </header>
 
-    <section class="tariffs-section page-start" style="padding-top: 40px;">
+    <section class="tariffs-section page-start" style="padding-top: 120px;">
         <div class="container" style="padding-top: 0; padding-bottom: 40px;">
             <div class="section-header" style="margin-bottom: 20px;">
                 <h2 class="section-title">Тарифы обслуживания</h2>
@@ -242,6 +242,65 @@
             dots.forEach((dot,index)=>dot.addEventListener('click',()=>{if(isMoving)return;const real=((currentIndex-visibleCount)%total+total)%total;if(index===real)return;let delta=index-real;if(delta>total/2)delta-=total;if(delta<-total/2)delta+=total;isMoving=true;currentIndex+=delta;moveTo(currentIndex,true);updateDots();setTimeout(()=>{if(currentIndex>=visibleCount+total)currentIndex-=total;if(currentIndex<visibleCount)currentIndex+=total;moveTo(currentIndex,false);updateDots();isMoving=false},470)}));
             let resizeTimer;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{buildCarousel();isMoving=false},120)});
             buildCarousel();
+
+            // Делегированный обработчик: карточки карусели создаются через cloneNode(),
+            // поэтому обычные обработчики на кнопках не переносятся на клоны.
+            document.addEventListener('click', function (event) {
+                const button = event.target.closest('.tariff-card .open-order-modal');
+                if (!button) return;
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                const modal = document.getElementById('orderModal');
+                const tariffSelect = document.getElementById('tariff-select');
+                if (!modal) return;
+
+                const product = button.getAttribute('data-product') || '';
+                const tariff = product.replace(/^Тариф:\s*/, '').trim();
+
+                if (tariffSelect) {
+                    const option = Array.from(tariffSelect.options).find(function (option) {
+                        return option.value === tariff || option.textContent.trim() === tariff;
+                    });
+                    if (option) tariffSelect.value = option.value;
+                }
+
+                modal.classList.add('active');
+                modal.style.display = 'flex';
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+            });
+
+            // Закрытие модального окна.
+            document.addEventListener('click', function (event) {
+                const modal = document.getElementById('orderModal');
+                if (!modal) return;
+
+                if (event.target.closest('#modalClose, #closeModal')) {
+                    modal.classList.remove('active');
+                    modal.style.display = '';
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('modal-open');
+                }
+
+                if (event.target === modal) {
+                    modal.classList.remove('active');
+                    modal.style.display = '';
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('modal-open');
+                }
+            });
+
+            document.addEventListener('keydown', function (event) {
+                const modal = document.getElementById('orderModal');
+                if (event.key === 'Escape' && modal && modal.classList.contains('active')) {
+                    modal.classList.remove('active');
+                    modal.style.display = '';
+                    modal.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('modal-open');
+                }
+            });
         });
     </script>
 </body>
