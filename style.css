@@ -504,7 +504,7 @@ header nav a.active {
     scrollbar-width: none;
     -ms-overflow-style: none;
     width: 100%;
-    padding: 10px 4px;
+    padding: 10px 55px;
 }
 
 .carousel-track-wrapper::-webkit-scrollbar,
@@ -537,6 +537,13 @@ header nav a.active {
     cursor: pointer;
     z-index: 10;
     transition: var(--animation-speed);
+    width: 42px;
+    height: 42px;
+    font-size: 28px;
+    background: var(--carousel-arrow-bg);
+    border: 1px solid var(--carousel-arrow-border);
+    color: var(--carousel-arrow-icon);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
 .carousel-btn:hover {
@@ -546,11 +553,11 @@ header nav a.active {
 }
 
 .prev-btn {
-    left: -22px;
+    left: 8px;
 }
 
 .next-btn {
-    right: -22px;
+    right: 8px;
 }
 
 .card {
