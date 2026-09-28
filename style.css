@@ -1179,6 +1179,27 @@ footer {
     .hero {
         padding-top: 100px;
     }
+    .carousel-btn {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+}
+
+.prev-btn {
+    left: 4px;
+}
+
+.next-btn {
+    right: 4px;
+}
+
+.carousel-track-wrapper,
+.tariffs-track-wrapper,
+.reviews-track-wrapper {
+    padding-left: 45px;
+    padding-right: 45px;
+}
 
 
 }
@@ -1209,10 +1230,6 @@ footer {
 
     .section-title {
         font-size: 26px;
-    }
-
-    .carousel-btn {
-        display: none;
     }
 
     .steps-grid {
