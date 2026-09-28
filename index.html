@@ -482,7 +482,6 @@
 
     <script src="script.js"></script>
     <script>
-       <script>
     // ============================================================
     // БЕСКОНЕЧНЫЕ КАРУСЕЛИ
     // ============================================================
@@ -492,14 +491,19 @@
         const prevBtn = document.getElementById(prevBtnId);
         const nextBtn = document.getElementById(nextBtnId);
 
-        if (!track || !prevBtn || !nextBtn) return;
+        if (!track || !prevBtn || !nextBtn || track.dataset.carouselReady === 'true') {
+            return;
+        }
+
+        track.dataset.carouselReady = 'true';
 
         const originalItems = Array.from(track.children);
+        const total = originalItems.length;
 
-        if (originalItems.length <= 1) return;
+        if (total <= 1) return;
 
-        // Создаём копии карточек:
-        // [копии последних] [оригиналы] [копии первых]
+        // Схема: [копии] [оригиналы] [копии]
+        // Благодаря этому переход через край выглядит непрерывным.
         const beforeClones = originalItems.map(item => item.cloneNode(true));
         const afterClones = originalItems.map(item => item.cloneNode(true));
 
@@ -512,22 +516,20 @@
         });
 
         const wrapper = track.parentElement;
-
-        let currentIndex = originalItems.length;
+        let currentIndex = total;
+        let correctionTimer;
 
         function getStep() {
             const firstItem = track.children[0];
-
             if (!firstItem) return 0;
 
-            const gap =
-                parseFloat(getComputedStyle(track).gap) || 0;
-
+            const gap = parseFloat(getComputedStyle(track).gap) || 0;
             return firstItem.getBoundingClientRect().width + gap;
         }
 
         function moveToIndex(index, smooth = true) {
             const step = getStep();
+            if (!step) return;
 
             wrapper.scrollTo({
                 left: index * step,
@@ -535,67 +537,69 @@
             });
         }
 
-        // Начинаем с первой настоящей карточки,
-        // а не с её копии.
+        function normalizeIndex() {
+            if (currentIndex >= total * 2) {
+                currentIndex -= total;
+                moveToIndex(currentIndex, false);
+            } else if (currentIndex < total) {
+                currentIndex += total;
+                moveToIndex(currentIndex, false);
+            }
+        }
+
+        // Начинаем с первой настоящей карточки.
         requestAnimationFrame(() => {
             moveToIndex(currentIndex, false);
         });
 
         nextBtn.addEventListener('click', () => {
-            currentIndex++;
+            currentIndex += 1;
             moveToIndex(currentIndex, true);
+
+            clearTimeout(correctionTimer);
+            correctionTimer = setTimeout(normalizeIndex, 450);
         });
 
         prevBtn.addEventListener('click', () => {
-            currentIndex--;
+            currentIndex -= 1;
             moveToIndex(currentIndex, true);
+
+            clearTimeout(correctionTimer);
+            correctionTimer = setTimeout(normalizeIndex, 450);
         });
 
-        // После завершения прокрутки незаметно
-        // возвращаемся в середину массива копий.
+        // Если пользователь листает пальцем/колёсиком, после остановки
+        // возвращаем позицию в среднюю копию без визуального скачка.
         wrapper.addEventListener('scroll', () => {
-            clearTimeout(wrapper._carouselTimer);
+            clearTimeout(correctionTimer);
 
-            wrapper._carouselTimer = setTimeout(() => {
+            correctionTimer = setTimeout(() => {
+                const step = getStep();
+                if (!step) return;
 
-                const total = originalItems.length;
+                const nearestIndex = Math.round(wrapper.scrollLeft / step);
+                currentIndex = nearestIndex;
+                normalizeIndex();
+            }, 180);
+        });
 
-                if (currentIndex >= total * 2) {
-                    currentIndex -= total;
-                    moveToIndex(currentIndex, false);
-                }
-
-                if (currentIndex < total) {
-                    currentIndex += total;
-                    moveToIndex(currentIndex, false);
-                }
-
-            }, 250);
+        window.addEventListener('resize', () => {
+            clearTimeout(correctionTimer);
+            correctionTimer = setTimeout(() => {
+                moveToIndex(currentIndex, false);
+            }, 100);
         });
     }
 
     // Популярные шаблоны
-    initInfiniteCarousel(
-        'templatesTrack',
-        'templatesPrev',
-        'templatesNext'
-    );
+    initInfiniteCarousel('templatesTrack', 'templatesPrev', 'templatesNext');
 
     // Тарифы
-    initInfiniteCarousel(
-        'tariffsTrack',
-        'tariffsPrev',
-        'tariffsNext'
-    );
+    initInfiniteCarousel('tariffsTrack', 'tariffsPrev', 'tariffsNext');
 
     // Отзывы
-    initInfiniteCarousel(
-        'reviewsTrack',
-        'reviewsPrev',
-        'reviewsNext'
-    );
+    initInfiniteCarousel('reviewsTrack', 'reviewsPrev', 'reviewsNext');
 </script>
-    </script>
 </body>
 
 </html>
