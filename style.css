@@ -505,6 +505,8 @@ header nav a.active {
     -ms-overflow-style: none;
     width: 100%;
     padding: 10px 55px;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-track-wrapper::-webkit-scrollbar,
@@ -527,22 +529,16 @@ header nav a.active {
     background: var(--carousel-arrow-bg);
     border: 1px solid var(--carousel-arrow-border);
     color: var(--carousel-arrow-icon);
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    font-size: 24px;
+    font-size: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 10;
     transition: var(--animation-speed);
-    width: 42px;
-    height: 42px;
-    font-size: 28px;
-    background: var(--carousel-arrow-bg);
-    border: 1px solid var(--carousel-arrow-border);
-    color: var(--carousel-arrow-icon);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
@@ -582,9 +578,11 @@ header nav a.active {
 }
 
 .card-img {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
+    object-position: center;
     background-color: #877f6c;
 }
 
@@ -1179,29 +1177,33 @@ footer {
     .hero {
         padding-top: 100px;
     }
+
     .carousel-btn {
-    display: flex;
-    width: 36px;
-    height: 36px;
-    font-size: 24px;
-}
+        display: flex;
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+    }
 
-.prev-btn {
-    left: 4px;
-}
+    .prev-btn {
+        left: 4px;
+    }
 
-.next-btn {
-    right: 4px;
-}
+    .next-btn {
+        right: 4px;
+    }
 
-.carousel-track-wrapper,
-.tariffs-track-wrapper,
-.reviews-track-wrapper {
-    padding-left: 45px;
-    padding-right: 45px;
-}
+    .carousel-track-wrapper,
+    .tariffs-track-wrapper,
+    .reviews-track-wrapper {
+        padding: 10px 42px;
+    }
 
-
+    .carousel-track,
+    .tariffs-track,
+    .reviews-track {
+        align-items: stretch;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1415,9 +1417,3 @@ h4,
     display: block;
     flex: 0 0 42px;
 }
-
-/* ==========================================================================
-   МОДАЛЬНОЕ ОКНО ОФОРМЛЕНИЯ ЗАКАЗА
-   ========================================================================== */
-body.modal-open{overflow:hidden}.modal-overlay{position:fixed;inset:0;z-index:3000;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;background:rgba(5,18,14,.72);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s ease,visibility .25s ease}.modal-overlay.active{opacity:1;visibility:visible;pointer-events:auto}.modal-content{position:relative;width:min(520px,100%);max-height:88vh;overflow-y:auto;box-sizing:border-box;padding:34px 38px 30px;background:var(--order-section-bg,#0F241D);border:1px solid var(--order-section-border,#D6A64D);border-radius:24px;box-shadow:0 25px 70px rgba(0,0,0,.35);transform:translateY(18px) scale(.98);transition:transform .25s ease}.modal-overlay.active .modal-content{transform:translateY(0) scale(1)}.modal-close{position:absolute;top:14px;right:16px;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border:1px solid var(--carousel-arrow-border,#D6A64D);border-radius:50%;background:transparent;color:var(--carousel-arrow-icon,#D6A64D);font-size:22px;cursor:pointer;z-index:2}.modal-close:hover{background:var(--carousel-arrow-hover-bg,#D6A64D);color:var(--carousel-arrow-hover-icon,#fff)}.modal-header{margin-bottom:22px!important;padding-right:35px}.modal-title{color:var(--accent,#D6A64D);margin-bottom:6px}.modal-subtitle{color:var(--page-text-color,#fff);margin:0}.modal-content form{gap:15px}.modal-content input,.modal-content select{box-sizing:border-box}.modal-submit{width:100%;justify-content:center;border:none;cursor:pointer;margin-top:4px}.modal-privacy{font-size:11px;color:var(--gray,#888);text-align:center;margin:0;line-height:1.4}.modal-privacy a{color:var(--accent,#D6A64D)}
-@media(max-width:768px){.modal-overlay{align-items:flex-end;padding:0}.modal-content{width:100%;max-height:90vh;padding:30px 20px 24px;border-radius:24px 24px 0 0;transform:translateY(30px)}.modal-overlay.active .modal-content{transform:translateY(0)}.modal-close{top:12px;right:12px}.modal-title{font-size:28px}.carousel-btn{display:flex}}
