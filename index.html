@@ -495,46 +495,52 @@
             return;
         }
 
-        track.dataset.carouselReady = 'true';
-
         const originalItems = Array.from(track.children);
         const total = originalItems.length;
 
         if (total <= 1) return;
 
-        // Схема: [копии] [оригиналы] [копии]
-        // Благодаря этому переход через край выглядит непрерывным.
+        track.dataset.carouselReady = 'true';
+
+        // Схема: [копии последних] [оригиналы] [копии первых]
         const beforeClones = originalItems.map(item => item.cloneNode(true));
         const afterClones = originalItems.map(item => item.cloneNode(true));
 
-        beforeClones.reverse().forEach(item => {
-            track.insertBefore(item, track.firstChild);
-        });
-
-        afterClones.forEach(item => {
-            track.appendChild(item);
-        });
+        beforeClones.reverse().forEach(item => track.insertBefore(item, track.firstChild));
+        afterClones.forEach(item => track.appendChild(item));
 
         const wrapper = track.parentElement;
         let currentIndex = total;
         let correctionTimer;
+        let isProgrammaticScroll = false;
 
-        function getStep() {
-            const firstItem = track.children[0];
-            if (!firstItem) return 0;
+        // Позиция, при которой карточка находится ровно по центру карусели.
+        function getCenteredLeft(index) {
+            const item = track.children[index];
+            if (!item) return 0;
 
-            const gap = parseFloat(getComputedStyle(track).gap) || 0;
-            return firstItem.getBoundingClientRect().width + gap;
+            return Math.max(
+                0,
+                item.offsetLeft - (wrapper.clientWidth - item.offsetWidth) / 2
+            );
         }
 
         function moveToIndex(index, smooth = true) {
-            const step = getStep();
-            if (!step) return;
+            const item = track.children[index];
+            if (!item) return;
+
+            isProgrammaticScroll = true;
 
             wrapper.scrollTo({
-                left: index * step,
+                left: getCenteredLeft(index),
                 behavior: smooth ? 'smooth' : 'auto'
             });
+
+            // После smooth-scroll разрешаем ручное управление снова.
+            clearTimeout(wrapper._programmaticTimer);
+            wrapper._programmaticTimer = setTimeout(() => {
+                isProgrammaticScroll = false;
+            }, smooth ? 500 : 50);
         }
 
         function normalizeIndex() {
@@ -547,7 +553,26 @@
             }
         }
 
-        // Начинаем с первой настоящей карточки.
+        // Определяем, какая карточка сейчас ближе всего к центру.
+        function getNearestIndex() {
+            const center = wrapper.scrollLeft + wrapper.clientWidth / 2;
+            let nearest = 0;
+            let nearestDistance = Infinity;
+
+            Array.from(track.children).forEach((item, index) => {
+                const itemCenter = item.offsetLeft + item.offsetWidth / 2;
+                const distance = Math.abs(itemCenter - center);
+
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearest = index;
+                }
+            });
+
+            return nearest;
+        }
+
+        // Стартуем с первой настоящей карточки и сразу ставим её по центру.
         requestAnimationFrame(() => {
             moveToIndex(currentIndex, false);
         });
@@ -557,7 +582,7 @@
             moveToIndex(currentIndex, true);
 
             clearTimeout(correctionTimer);
-            correctionTimer = setTimeout(normalizeIndex, 450);
+            correctionTimer = setTimeout(normalizeIndex, 550);
         });
 
         prevBtn.addEventListener('click', () => {
@@ -565,24 +590,23 @@
             moveToIndex(currentIndex, true);
 
             clearTimeout(correctionTimer);
-            correctionTimer = setTimeout(normalizeIndex, 450);
+            correctionTimer = setTimeout(normalizeIndex, 550);
         });
 
-        // Если пользователь листает пальцем/колёсиком, после остановки
-        // возвращаем позицию в среднюю копию без визуального скачка.
+        // Свайп/скролл: после остановки центрируем ближайшую карточку.
         wrapper.addEventListener('scroll', () => {
+            if (isProgrammaticScroll) return;
+
             clearTimeout(correctionTimer);
 
             correctionTimer = setTimeout(() => {
-                const step = getStep();
-                if (!step) return;
-
-                const nearestIndex = Math.round(wrapper.scrollLeft / step);
-                currentIndex = nearestIndex;
+                currentIndex = getNearestIndex();
                 normalizeIndex();
+                moveToIndex(currentIndex, true);
             }, 180);
         });
 
+        // При изменении ширины экрана карточка остаётся по центру.
         window.addEventListener('resize', () => {
             clearTimeout(correctionTimer);
             correctionTimer = setTimeout(() => {
@@ -591,13 +615,8 @@
         });
     }
 
-    // Популярные шаблоны
     initInfiniteCarousel('templatesTrack', 'templatesPrev', 'templatesNext');
-
-    // Тарифы
     initInfiniteCarousel('tariffsTrack', 'tariffsPrev', 'tariffsNext');
-
-    // Отзывы
     initInfiniteCarousel('reviewsTrack', 'reviewsPrev', 'reviewsNext');
 </script>
 </body>
