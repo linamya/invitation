@@ -1415,3 +1415,50 @@ h4,
     display: block;
     flex: 0 0 42px;
 }
+
+/* ==========================================================================
+   МОДАЛЬНОЕ ОКНО ОФОРМЛЕНИЯ ЗАКАЗА
+   ========================================================================== */
+body.modal-open { overflow: hidden; }
+.modal-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px; box-sizing: border-box;
+    background: rgba(3, 22, 17, .78);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity .25s ease, visibility .25s ease;
+}
+.modal-overlay.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+.modal-content {
+    position: relative; width: min(100%, 520px); max-height: min(90vh, 760px);
+    overflow-y: auto; box-sizing: border-box; padding: 34px 30px 28px;
+    background: var(--page-bg-color); border: 1px solid var(--accent); border-radius: 24px;
+    box-shadow: 0 25px 80px rgba(0,0,0,.35);
+    transform: translateY(18px) scale(.98); transition: transform .25s ease;
+    -webkit-overflow-scrolling: touch;
+}
+.modal-overlay.is-open .modal-content { transform: translateY(0) scale(1); }
+.modal-header { margin-bottom: 22px; padding-right: 30px; }
+.modal-title { margin: 0 0 8px; color: var(--accent); }
+.modal-subtitle { margin: 0; color: var(--text-color); line-height: 1.45; }
+.modal-close {
+    position: absolute; top: 14px; right: 14px; width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+    border: 1px solid var(--accent); border-radius: 50%; background: transparent;
+    color: var(--accent); font-size: 18px; line-height: 1; cursor: pointer; z-index: 2;
+    transition: all .2s ease;
+}
+.modal-close:hover, .modal-close:focus-visible { background: var(--accent); color: var(--page-bg-color); outline: none; }
+.modal-content .form-group { margin-bottom: 14px; }
+.modal-content .form-group label { display: block; margin-bottom: 7px; }
+.modal-content input, .modal-content select { width: 100%; box-sizing: border-box; }
+.modal-submit { width: 100%; border: none; cursor: pointer; justify-content: center; margin-top: 8px; }
+.modal-privacy { margin: 12px 0 0; font-size: 11px; line-height: 1.4; text-align: center; color: var(--gray); }
+.modal-privacy a { color: var(--accent); }
+@media (max-width: 600px) {
+    .modal-overlay { align-items: flex-end; padding: 10px; }
+    .modal-content { width: 100%; max-height: 92vh; padding: 28px 20px 22px; border-radius: 22px; }
+    .modal-header { margin-bottom: 18px; }
+    .modal-close { top: 10px; right: 10px; }
+}
