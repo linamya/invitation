@@ -179,6 +179,188 @@
             cursor: pointer;
         }
     </style>
+
+
+/* ==========================================================================
+   МОДАЛЬНОЕ ОКНО ЗАКАЗА — такой же стиль, как на главной
+   ========================================================================== */
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(5, 18, 14, 0.72);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.modal-content {
+    position: relative;
+    width: min(520px, 100%);
+    max-height: min(88vh, 760px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 34px 38px 30px;
+    background: var(--order-section-bg, #0F241D);
+    border: 1px solid var(--order-section-border, #D6A64D);
+    border-radius: 24px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+    transform: translateY(18px) scale(0.98);
+    transition: transform 0.25s ease;
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0) scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--carousel-arrow-border, #D6A64D);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--carousel-arrow-icon, #D6A64D);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    transition: 0.2s ease;
+}
+
+.modal-close:hover {
+    background: var(--carousel-arrow-hover-bg, #D6A64D);
+    color: var(--carousel-arrow-hover-icon, #FFFFFF);
+}
+
+.modal-header {
+    margin-bottom: 22px !important;
+    padding-right: 35px;
+    text-align: center;
+}
+
+.modal-title {
+    margin-bottom: 6px;
+    color: var(--accent, #D6A64D);
+}
+
+.modal-subtitle {
+    margin: 0;
+    color: var(--page-text-color, #FFFFFF);
+}
+
+.modal-content .form-group {
+    margin-bottom: 15px;
+}
+
+.modal-content .form-group label {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--accent, #D6A64D);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.modal-content input,
+.modal-content select {
+    width: 100%;
+    min-height: 44px;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid var(--accent, #D6A64D);
+    border-radius: 9px;
+    background: transparent;
+    color: var(--page-text-color, #FFFFFF);
+    font: inherit;
+    outline: none;
+}
+
+.modal-content input::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.modal-content select option {
+    color: #222;
+    background: #fff;
+}
+
+.modal-content input:focus,
+.modal-content select:focus {
+    box-shadow: 0 0 0 2px rgba(214, 166, 77, 0.18);
+}
+
+.modal-submit {
+    width: 100%;
+    min-height: 48px;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    margin-top: 4px;
+}
+
+.modal-privacy {
+    margin: 14px 0 0;
+    font-size: 11px;
+    line-height: 1.4;
+    text-align: center;
+    color: var(--gray, #888);
+}
+
+.modal-privacy a {
+    color: var(--accent, #D6A64D);
+}
+
+@media (max-width: 768px) {
+    .modal-overlay {
+        align-items: flex-end;
+        padding: 0;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-height: 90vh;
+        padding: 30px 20px 24px;
+        border-radius: 24px 24px 0 0;
+        transform: translateY(30px);
+    }
+
+    .modal-overlay.active .modal-content {
+        transform: translateY(0);
+    }
+
+    .modal-title {
+        font-size: 28px;
+    }
+
+    .modal-close {
+        top: 12px;
+        right: 12px;
+    }
+}
+
 </head>
 
 <body>
@@ -474,25 +656,26 @@
         </div>
     </footer>
 
-    <!-- Модальное окно с формой заказа -->
-    <div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 15px;">
-        <div style="background: #fff; padding: 30px; border-radius: 16px; max-width: 500px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto;">
-            <button id="closeModal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
-            
-            <div style="margin-bottom: 20px; text-align: center;">
-                <h2 style="font-size: 22px; margin-bottom: 5px;">Оформить заказ</h2>
-                <p style="font-size: 13px; color: var(--gray);">Заполните данные, и я свяжусь с вами</p>
+    <!-- Модальное окно оформления заказа -->
+    <div id="orderModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+            <button type="button" class="modal-close" id="closeModal" aria-label="Закрыть">×</button>
+
+            <div class="section-header modal-header">
+                <h2 id="orderModalTitle" class="modal-title">Оформить заказ</h2>
+                <p class="modal-subtitle">Заполните данные,<br>и я свяжусь с вами</p>
             </div>
 
-            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST">
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Имя</label>
-                    <input type="text" name="name" placeholder="Например, Анна" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST" id="orderModalForm">
+
+                <div class="form-group">
+                    <label for="modal-name">Имя</label>
+                    <input id="modal-name" type="text" name="name" placeholder="Например, Анна" required>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Мессенджер</label>
-                    <select name="messenger" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; background: #fff;">
+                <div class="form-group">
+                    <label for="modal-messenger">Мессенджер</label>
+                    <select id="modal-messenger" name="messenger" required>
                         <option value="" disabled selected>Выберите мессенджер</option>
                         <option value="Telegram">Telegram</option>
                         <option value="WhatsApp">WhatsApp</option>
@@ -500,22 +683,36 @@
                     </select>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Ник / телефон</label>
-                    <input type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+                <div class="form-group">
+                    <label for="modal-contact">Ник / телефон</label>
+                    <input id="modal-contact" type="text" name="contact_handle"
+                           placeholder="@username или ваш номер телефона" required>
                 </div>
 
-                <div style="margin-bottom: 15px;">
-                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Выбранный шаблон</label>
-                    <input type="text" name="template" id="modal-template-input" readonly style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; box-sizing: border-box;">
+                <div class="form-group">
+                    <label for="modal-tariff">Выбрать тариф</label>
+                    <select id="modal-tariff" name="tariff" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать тариф</option>
+                        <option value="Базовый 2 000 ₽">Базовый 2 000 ₽</option>
+                        <option value="Премиальный 3 000 ₽">Премиальный 3 000 ₽</option>
+                        <option value="Индивидуальный 5 000 ₽">Индивидуальный 5 000 ₽</option>
+                    </select>
                 </div>
 
-                <button type="submit" class="btn-primary-glow" style="width: 100%; padding: 12px; border: none; cursor: pointer; border-radius: 8px; font-weight: 600;">
+                <div class="form-group">
+                    <label for="modal-template">Выбрать шаблон</label>
+                    <select id="modal-template" name="template" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary-glow modal-submit">
                     <span>Отправить заявку</span>
                 </button>
 
-                <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.4;">
-                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html" style="color: var(--accent);">Политикой конфиденциальности</a>.
+                <p class="modal-privacy">
+                    Нажимая кнопку, вы соглашаетесь с
+                    <a href="privacy.html">Политикой конфиденциальности</a>.
                 </p>
             </form>
         </div>
@@ -523,78 +720,153 @@
 
     <script src="script.js"></script>
     <script>
-        const tariffTabs = document.querySelectorAll('.tariff-tab-btn');
-        const eventFilters = document.querySelectorAll('.event-filters-inline .filter-btn-inline');
-        const cards = document.querySelectorAll('.catalog-grid .card');
+        document.addEventListener('DOMContentLoaded', function () {
+            const tariffTabs = document.querySelectorAll('.tariff-tab-btn');
+            const eventFilters = document.querySelectorAll('#eventFilters .filter-btn-inline');
+            const cards = document.querySelectorAll('.catalog-grid .card');
 
-        let currentTariff = 'base';
-        let currentEvent = 'all';
+            let currentTariff = 'base';
+            let currentEvent = 'all';
 
-        function filterCatalog() {
-            cards.forEach(card => {
-                const cardTariff = card.getAttribute('data-tariff');
-                const cardEvent = card.getAttribute('data-event');
+            function filterCatalog() {
+                cards.forEach(card => {
+                    const cardTariff = card.getAttribute('data-tariff');
+                    const cardEvent = card.getAttribute('data-event');
 
-                const matchesTariff = cardTariff === currentTariff;
-                const matchesEvent = currentEvent === 'all' || cardEvent === currentEvent;
+                    const matchesTariff = cardTariff === currentTariff;
+                    const matchesEvent = currentEvent === 'all' || cardEvent === currentEvent;
 
-                card.classList.toggle('catalog-card-hidden', !(matchesTariff && matchesEvent));
+                    card.classList.toggle(
+                        'catalog-card-hidden',
+                        !(matchesTariff && matchesEvent)
+                    );
+                });
+            }
+
+            tariffTabs.forEach(tab => {
+                tab.addEventListener('click', function () {
+                    tariffTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentTariff = this.getAttribute('data-tariff');
+                    filterCatalog();
+                });
             });
-        }
 
-        tariffTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tariffTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                currentTariff = tab.getAttribute('data-tariff');
-                filterCatalog();
+            eventFilters.forEach(button => {
+                button.addEventListener('click', function () {
+                    eventFilters.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentEvent = this.getAttribute('data-event');
+                    filterCatalog();
+                });
             });
-        });
 
-        eventFilters.forEach(btn => {
-            btn.addEventListener('click', () => {
-                eventFilters.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentEvent = btn.getAttribute('data-event');
-                filterCatalog();
-            });
-        });
+            filterCatalog();
 
-        filterCatalog();
-
-        // Управление модальным окном заказа
-        document.addEventListener('DOMContentLoaded', () => {
+            /* ============================================================
+               МОДАЛЬНОЕ ОКНО ЗАКАЗА
+               ============================================================ */
             const modal = document.getElementById('orderModal');
-            const closeModal = document.getElementById('closeModal');
-            const templateInput = document.getElementById('modal-template-input');
-            const selectButtons = document.querySelectorAll('.select-btn');
+            const closeModalButton = document.getElementById('closeModal');
+            const modalTariff = document.getElementById('modal-tariff');
+            const modalTemplate = document.getElementById('modal-template');
+            const nameInput = document.getElementById('modal-name');
 
-            selectButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const templateName = button.getAttribute('data-template');
-                    if (templateInput) {
-                        templateInput.value = templateName;
+            // Собираем названия шаблонов прямо из карточек каталога.
+            const templateNames = Array.from(
+                document.querySelectorAll('.select-btn')
+            ).map(button => ({
+                name: button.dataset.template,
+                tariff: button.closest('.card')?.dataset.tariff || 'base'
+            }));
+
+            templateNames.forEach(item => {
+                if (!item.name) return;
+
+                const option = document.createElement('option');
+                option.value = item.name;
+                option.textContent = item.name;
+                option.dataset.tariff = item.tariff;
+                modalTemplate.appendChild(option);
+            });
+
+            function openOrderModal(templateName = '') {
+                if (!modal) return;
+
+                if (templateName) {
+                    modalTemplate.value = templateName;
+
+                    const selectedCard = Array.from(cards).find(card => {
+                        const button = card.querySelector('.select-btn');
+                        return button && button.dataset.template === templateName;
+                    });
+
+                    if (selectedCard) {
+                        const tariff = selectedCard.dataset.tariff;
+
+                        if (tariff === 'premium') {
+                            modalTariff.value = 'Премиальный 3 000 ₽';
+                        } else {
+                            modalTariff.value = 'Базовый 2 000 ₽';
+                        }
                     }
-                    if (modal) {
-                        modal.style.display = 'flex';
-                    }
+                }
+
+                modal.classList.add('active');
+                modal.setAttribute('aria-hidden', 'false');
+                document.body.classList.add('modal-open');
+
+                setTimeout(() => {
+                    if (nameInput) nameInput.focus();
+                }, 100);
+            }
+
+            function closeOrderModal() {
+                if (!modal) return;
+
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('modal-open');
+            }
+
+            document.querySelectorAll('.select-btn').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    openOrderModal(this.dataset.template || '');
                 });
             });
 
-            if (closeModal) {
-                closeModal.addEventListener('click', () => {
-                    modal.style.display = 'none';
+            // Кнопка «Заказать» в шапке тоже открывает это же окно.
+            const headerOrderButton = document.querySelector('.header-actions .btn-header');
+
+            if (headerOrderButton) {
+                headerOrderButton.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    openOrderModal('');
                 });
+            }
+
+            if (closeModalButton) {
+                closeModalButton.addEventListener('click', closeOrderModal);
             }
 
             if (modal) {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.style.display = 'none';
+                modal.addEventListener('click', function (event) {
+                    if (event.target === modal) {
+                        closeOrderModal();
                     }
                 });
             }
+
+            document.addEventListener('keydown', function (event) {
+                if (
+                    event.key === 'Escape' &&
+                    modal &&
+                    modal.classList.contains('active')
+                ) {
+                    closeOrderModal();
+                }
+            });
         });
     </script>
 </body>
