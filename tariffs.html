@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тарифы и этапы работы — LYMI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .tariffs-carousel-wrapper { position: relative; max-width: 380px; margin: 0 auto; overflow: hidden; padding: 10px 0 30px; }
+        .tariffs-grid { display: flex; transition: transform 0.4s ease; width: 100%; box-sizing: border-box; touch-action: pan-y; }
+        .tariff-card { flex: 0 0 100%; width: 100%; max-width: 380px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; margin: 0 auto; }
+        @media (min-width: 768px) {
+            .tariffs-carousel-wrapper { max-width: 900px; padding: 10px 40px 30px; }
+            .tariffs-grid { gap: 24px; }
+            .tariff-card { flex: 0 0 calc(50% - 12px); max-width: calc(50% - 12px); margin: 0; }
+        }
+        .tariff-card .select-btn { width: 100%; padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; text-align: center; border: none; background: var(--primary); color: #fff; transition: opacity 0.2s; box-sizing: border-box; display: block; margin-top: 20px; }
+        .tariff-card .select-btn:hover { opacity: 0.9; }
+        .carousel-arrow { position: absolute; top: 45%; transform: translateY(-50%); background: none; border: none; font-size: 32px; font-weight: 300; color: #111; cursor: pointer; z-index: 10; padding: 10px; }
+        .carousel-arrow.prev { left: -10px; }
+        .carousel-arrow.next { right: -10px; }
+        .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 15px; }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: #d1d5db; border: none; cursor: pointer; padding: 0; transition: background 0.2s, width 0.2s; }
+        .dot.active { background: var(--primary); width: 24px; border-radius: 4px; }
+        @media (min-width: 768px) { .carousel-dots { display: none; } .carousel-arrow { display: flex; } .tariffs-carousel-wrapper { padding: 10px 40px 30px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">LYMI</a></div>
+
+        <button class="burger-btn" id="menuToggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="mainNav">
+            <a href="index.html">Главная</a>
+            <a href="catalog.html">Каталог</a>
+            <a href="tariffs.html" class="active">Тарифы</a>
+            <a href="about.html">О студии</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="index.html#order" class="btn-header">Заказать</a>
+        </div>
+    </header>
+
+    <section class="tariffs-section page-start" style="padding-top: 40px;">
+        <div class="container" style="padding-top: 0; padding-bottom: 40px;">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2 class="section-title">Тарифы обслуживания</h2>
+                <p class="section-subtitle">Прозрачные условия без скрытых доплат. Выберите уровень кастомизации.</p>
+            </div>
+
+            <div class="tariffs-carousel-wrapper">
+                <button class="carousel-arrow prev" id="prevBtn" aria-label="Назад">‹</button>
+                <button class="carousel-arrow next" id="nextBtn" aria-label="Вперед">›</button>
+
+                <div class="tariffs-grid" id="tariffsTrack">
+                    <div class="tariff-card">
+                        <div>
+                            <h3>Базовый</h3>
+                            <p class="tariff-desc">Для тех, кому нужен быстрый, лаконичный и стильный результат.</p>
+                            <div class="tariff-price">1 200 ₽</div>
+                            <ul class="tariff-list">
+                                <li>Готовый шаблон из каталога</li>
+                                <li>Внесение ваших текстов и фото</li>
+                                <li>Срок изготовления: до 24 часов</li>
+                                <li>Срок работы ссылки: 6 месяцев</li>
+                                <li><strong style="color:var(--primary);">Бесплатные правки деталей в любое время</strong></li>
+                            </ul>
+                        </div>
+                        <button class="select-btn open-order-modal" data-product="Тариф: Базовый 2 000 ₽">Выбрать</button>
+                    </div>
+
+                    <div class="tariff-card popular">
+                        <span class="badge">Выбор клиентов</span>
+                        <div>
+                            <h3>Премиальный</h3>
+                            <p class="tariff-desc">Максимальный интерактив, забота о деталях и вау-эффект для гостей.</p>
+                            <div class="tariff-price">2 500 ₽</div>
+                            <ul class="tariff-list">
+                                <li>Любой шаблон из каталога</li>
+                                <li>Интерактивная анкета RSVP</li>
+                                <li>Добавление фоновой музыки трека</li>
+                                <li>Срок изготовления: до 5 часов</li>
+                                <li>Срок работы ссылки: 1 год</li>
+                                <li><strong style="color:var(--primary);">Бесплатные правки до дня торжества</strong></li>
+                            </ul>
+                        </div>
+                        <button class="select-btn open-order-modal" data-product="Тариф: Премиальный 3 000 ₽">Выбрать</button>
+                    </div>
+
+                    <div class="tariff-card">
+                        <div>
+                            <h3>Индивидуальный</h3>
+                            <p class="tariff-desc">Эксклюзивный дизайн-проект под ключ под концепцию вашего события.</p>
+                            <div class="tariff-price">от 5 000 ₽</div>
+                            <ul class="tariff-list">
+                                <li>Уникальный дизайн под концепцию</li>
+                                <li>Сложные анимации и кастомные элементы</li>
+                                <li>Неограниченные правки на этапе создания</li>
+                                <li>Персональный менеджер</li>
+                                <li><strong style="color:var(--primary);">Полная поддержка до конца события</strong></li>
+                            </ul>
+                        </div>
+                        <button class="select-btn open-order-modal" data-product="Тариф: Индивидуальный 5 000 ₽">Выбрать</button>
+                    </div>
+                </div>
+
+                <div class="carousel-dots" id="carouselDots">
+                    <button class="dot" data-index="0"></button>
+                    <button class="dot active" data-index="1"></button>
+                    <button class="dot" data-index="2"></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container">
+        <div class="section-header">
+            <h2 class="section-title">Как мы создаем ваше пригласительное</h2>
+            <p class="section-subtitle">Простой и прозрачный процесс из 4 шагов от заявки до отправки гостям</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-number">01</span>
+                <h3>Выбор и заявка</h3>
+                <p>Вы выбираете шаблон или тариф на сайте и заполняете короткую форму заказа.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-number">02</span>
+                <h3>Детали и материалы</h3>
+                <p>Мы связываемся с вами в мессенджере, утверждаем тексты, тайминг и ваши фотографии.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-number">03</span>
+                <h3>Сборка за 24 часа</h3>
+                <p>Мы создаем сайт, тестируем его на смартфонах и отправляем вам черновик на проверку.</p>
+            </div>
+            <div class="step-card">
+                <span class="step-number">04</span>
+                <h3>Запуск и поддержка</h3>
+                <p>Вы утверждаете проект, получаете готовую ссылку и отправляете её вашим гостям!</p>
+            </div>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>🛡️ Наша гарантия спокойствия</h3>
+            <p>Мы понимаем, что во время подготовки к празднику могут меняться детали. <strong>До самого дня торжества мы на связи:</strong> любые изменения мы вносим абсолютно бесплатно и моментально!</p>
+        </div>
+    </section>
+
+    <!-- Модальное окно заказа: структура такая же, как форма внизу главной страницы -->
+    <div class="modal-overlay" id="orderModal" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+            <button type="button" class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+            <h2 id="orderModalTitle" class="modal-title">Оформить заказ</h2>
+            <p class="modal-subtitle">Заполните данные, и я свяжусь с вами для обсуждения деталей.</p>
+            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" name="name" placeholder="Например, Анна" required>
+                </div>
+                <div class="form-group">
+                    <label>Мессенджер</label>
+                    <select name="messenger" required>
+                        <option value="" disabled selected>Выберите мессенджер</option>
+                        <option value="Telegram">Telegram</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Instagram">Instagram</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ник / телефон</label>
+                    <input type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required>
+                </div>
+                <div class="form-group">
+                    <label>Выбрать тариф</label>
+                    <select name="tariff" id="tariff-select" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать тариф</option>
+                        <option value="Базовый 2 000 ₽">Базовый 2 000 ₽</option>
+                        <option value="Премиальный 3 000 ₽">Премиальный 3 000 ₽</option>
+                        <option value="Индивидуальный 5 000 ₽">Индивидуальный 5 000 ₽</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Выбрать шаблон</label>
+                    <select name="template" id="template-select" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option>
+                        <option value="Свадьба «Classic Beige»">Свадьба «Classic Beige»</option>
+                        <option value="Свадьба «Kaaly olive»">Свадьба «Kaaly olive»</option>
+                        <option value="Свадьба «Premium Boho»">Свадьба «Premium Boho»</option>
+                        <option value="Другой шаблон из каталога">Другой шаблон из каталога</option>
+                    </select>
+                </div>
+                <button type="submit" class="modal-submit">Отправить заявку</button>
+                <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.4;">
+                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html" style="color: var(--accent);">Политикой конфиденциальности</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">LYMI</div>
+            <div class="footer-socials">
+                <a href="https://t.me/ваш_логин" target="_blank" rel="noopener">Telegram</a>
+                <a href="https://www.instagram.com/linayami_web?stkn=MTNtdXJlNGppMGp6eA%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://ru.pinterest.com/linaymi0115/" target="_blank" rel="noopener">Pinterest</a>
+            </div>
+            <p>&copy; 2026 LYMI. Электронные пригласительные нового поколения.</p>
+            <p style="font-size: 13px;">
+                <a href="privacy.html" style="color: inherit; text-decoration: underline;">Конфиденциальность</a> |
+                <a href="offer.html" style="color: inherit; text-decoration: underline;">Оферта</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        const track = document.getElementById('tariffsTrack');
+        const wrapper = track?.parentElement;
+        const cards = track ? Array.from(track.children) : [];
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = document.querySelectorAll('.dot');
+        let currentIndex = 0;
+
+        function getStep() {
+            if (!cards.length) return 0;
+            const gap = parseFloat(getComputedStyle(track).gap) || 0;
+            return cards[0].getBoundingClientRect().width + gap;
+        }
+
+        function moveCarousel(direction) {
+            if (!cards.length || !wrapper) return;
+            currentIndex = (currentIndex + direction + cards.length) % cards.length;
+            const step = getStep();
+            const maxScroll = Math.max(0, track.scrollWidth - wrapper.clientWidth);
+            const target = Math.min(currentIndex * step, maxScroll);
+            wrapper.scrollTo({ left: target, behavior: 'smooth' });
+            dots.forEach(d => d.classList.remove('active'));
+            if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+        }
+
+        nextBtn?.addEventListener('click', () => moveCarousel(1));
+        prevBtn?.addEventListener('click', () => moveCarousel(-1));
+        dots.forEach((dot, index) => dot.addEventListener('click', () => {
+            currentIndex = index;
+            moveCarousel(0);
+        }));
+    </script>
+</body>
+</html>

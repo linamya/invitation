@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LYMI — Электронные пригласительные на свадьбу и праздники</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Шапка сайта -->
+    <header>
+        <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">LYMI</a></div>
+
+        <button class="burger-btn" id="menuToggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="mainNav">
+            <a href="index.html" class="active">Главная</a>
+            <a href="catalog.html">Каталог</a>
+            <a href="tariffs.html">Тарифы</a>
+            <a href="about.html">О студии</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="index.html#order" class="btn-header">Заказать</a>
+        </div>
+    </header>
+
+    <!-- 1. Главный экран (Hero) -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Электронные пригласительные, которые влюбляют с первой секунды</h1>
+            <p>Создадим для вас современный сайт-приглашение. Интерактивная анкета RSVP, музыка, анимация и абсолютный
+                вау-эффект для гостей.</p>
+            <div class="hero-buttons">
+                <a href="catalog.html" class="btn-primary-glow">
+                    <span>Смотреть каталог</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                </a>
+                <a href="#order" class="btn-subtle-glow">
+                    <span>Оставить заявку</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Популярные шаблоны (Карусель) -->
+    <main class="container">
+        <div class="section-header">
+            <h2 class="section-title">Популярные шаблоны</h2>
+            <p class="section-subtitle">Топовые дизайны нашей коллекции <br>
+                для вашего особенного дня</p>
+        </div>
+
+        <div class="carousel-container">
+            <button class="carousel-btn prev-btn" id="templatesPrev" aria-label="Назад">‹</button>
+            <div class="carousel-track-wrapper" id="templatesWrapper">
+                <div class="carousel-track" id="templatesTrack">
+
+                    <!-- Первая карточка (Видео) -->
+                    <div class="card">
+                        <div class="card-img-wrapper">
+                            <video src="images/hit1.mp4" class="card-img" autoplay muted loop playsinline></video>
+                            <span class="card-tag">Хит свадеб</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Свадьба «Classic Beige»</h3>
+                            <div class="card-footer-info">
+                                <span class="card-price">2000 ₽</span>
+                            </div>
+                            <p class="card-desc">Строгая элегантность, минимализм и безупречный классический стиль.</p>
+                            <div class="card-actions">
+                                <a href="https://linamya.github.io/kirillandkarina/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
+                                <a href="#" class="btn-card select-btn"
+                                    data-template="Свадьба «Classic Beige»">Выбрать</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Вторая карточка (Видео) -->
+                    <div class="card">
+                        <div class="card-img-wrapper">
+                            <video src="images/hit2.mp4" class="card-img" autoplay muted loop playsinline></video>
+                            <span class="card-tag">Трендовый</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Свадьба «Kaaly olive»</h3>
+                            <div class="card-footer-info">
+                                <span class="card-price">2000 ₽</span>
+                            </div>
+                            <p class="card-desc">Трендовый оливковый оттенок, легкость и
+                                современный шик.</p>
+                            <div class="card-actions">
+                                <a href="https://linamya.github.io/shan/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
+                                <a href="#" class="btn-card select-btn"
+                                    data-template="Свадьба «Kaaly olive»">Выбрать</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Третья карточка (Видео) -->
+                    <div class="card">
+                        <div class="card-img-wrapper">
+                            <video src="images/hit3.mp4" class="card-img" autoplay muted loop playsinline></video>
+                            <span class="card-tag">Роскошный</span>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Свадьба «Premium Boho»</h3>
+                            <div class="card-footer-info">
+                                <span class="card-price">3000 ₽</span>
+                            </div>
+                            <p class="card-desc">Роскошный дизайн, акцент на изящные анимации и детали.</p>
+                            <div class="card-actions">
+                                <a href="https://linamya.github.io/davidandarina/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
+                                <a href="#" class="btn-card select-btn"
+                                    data-template="Свадьба «Premium Boho»">Выбрать</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <button class="carousel-btn next-btn" id="templatesNext" aria-label="Вперед">›</button>
+        </div>
+
+        <div class="catalog-link-wrapper">
+            <a href="catalog.html" class="catalog-link-minimal">
+                <span>Смотреть все шаблоны в каталоге</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </a>
+        </div>
+    </main>
+    <!-- ВОТ ЗДЕСЬ ВСТАВЛЯЕМ БЕГУЩУЮ СТРОКУ: -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+            <div class="marquee-item">инвестиции в эмоции &bull;</div>
+        </div>
+    </div>
+    <!-- 3. Продающий блок с тарифами -->
+    <section class="tariffs-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Тарифы обслуживания</h2>
+                <p class="section-subtitle">Выберите формат, который подходит <br>
+                    именно вам. Никаких скрытых платежей.</p>
+            </div>
+
+
+            <div class="tariffs-carousel-container">
+                <button class="carousel-btn prev-btn" id="tariffsPrev" aria-label="Назад">‹</button>
+                <div class="tariffs-track-wrapper" id="tariffsWrapper">
+                    <div class="tariffs-track" id="tariffsTrack">
+
+                        <!-- Тариф 1: Базовый -->
+                        <div class="tariff-card">
+                            <div>
+                                <div class="tariff-header-top">
+                                    <h3>Базовый</h3>
+                                    <span class="tariff-badge-sub">Старт</span>
+                                </div>
+                                <p class="tariff-desc">Идеальный выбор, если вам нужен красивый сайт в сжатые сроки без
+                                    лишних сложностей.</p>
+                                <div class="tariff-price">2 000 ₽</div>
+
+                                <!-- Добавили класс last-item-cross вот сюда ↓ -->
+                                <ul class="tariff-list last-item-cross">
+                                    <li>Срок изготовления: до 1-2 дня</li>
+                                    <li>Интерактивная кнопки карты </li>
+                                    <li>Таймер обратного отсчета</li>
+                                    <li>Анкета для гостей</li>
+                                    <li>Нельзя вносить изменения в структуру сайта</li>
+                                </ul>
+                            </div>
+                            <a href="#order" class="tariff-btn-outline select-btn"
+                                data-template="Тариф: Базовый">Выбрать базовый</a>
+                        </div>
+
+                        <!-- Тариф 2: Премиальный -->
+                        <div class="tariff-card popular">
+                            <span class="badge">Хит ⭐</span>
+                            <div>
+                                <div class="tariff-header-top">
+                                    <h3>Премиальный</h3>
+                                    <span class="tariff-badge-sub">Всё включено</span>
+                                </div>
+                                <p class="tariff-desc">Максимальный комфорт для праздника: базовые функции + анимации.
+                                </p>
+                                <div class="tariff-price">3 000 ₽</div>
+                                <ul class="tariff-list">
+                                    <li><strong>Всё из базового тарифа</strong></li>
+                                    <li>Анимации разной сложности</li>
+                                    <li>Фоновое музыкальное сопровождение</li>
+                                    <li>Эффект открытия конверта</li>
+                                    <li>Срок изготовления: 2-4 дня</li>
+                                </ul>
+                            </div>
+                            <a href="#order" class="tariff-btn-primary select-btn"
+                                data-template="Тариф: Премиальный">Выбрать премиум</a>
+                        </div>
+
+                        <!-- Тариф 3: Индивидуальный -->
+                        <div class="tariff-card">
+                            <div>
+                                <div class="tariff-header-top">
+                                    <h3>Индивидуальный</h3>
+                                    <span class="tariff-badge-sub">Эксклюзив</span>
+                                </div>
+                                <p class="tariff-desc">Разработка уникального дизайна с нуля под стилистику и концепцию
+                                    вашего события.</p>
+                                <div class="tariff-price">5 000 ₽</div>
+                                <ul class="tariff-list">
+                                    <li>Уникальный дизайн под ключ</li>
+                                    <li>Любые интерактивные модули</li>
+                                    <li>Индивидуальная верстка и анимация</li>
+                                    <li>Сроки изготовления: 4-6 дней</li>
+                                </ul>
+                            </div>
+                            <a href="#order" class="tariff-btn-outline select-btn"
+                                data-template="Тариф: Индивидуальный">Выбрать индивидуальный</a>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="carousel-btn next-btn" id="tariffsNext" aria-label="Вперед">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Этапы работы -->
+    <section class="container">
+        <div class="section-header">
+            <h2 class="section-title">Как мы создаем пригласительные</h2>
+            <p class="section-subtitle">Этапы работы из 4 шагов</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <span class="step-number">01</span>
+                <div>
+                    <h3>Выбор и заявка</h3>
+                    <p>Вы выбираете шаблон и заполняете форму для заказа.</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <span class="step-number">02</span>
+                <div>
+                    <h3>Материалы</h3>
+                    <p>Утверждаем тексты, фото и детали в мессенджере.</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <span class="step-number">03</span>
+                <div>
+                    <h3>Создание сайта </h3>
+                    <p>Разрабатываем сайт, и отправляем вам видеозапись сайта.</p>
+                </div>
+            </div>
+            <div class="step-card">
+                <span class="step-number">04</span>
+                <div>
+                    <h3>Оплата</h3>
+                    <p>Отправляем вам реквизиты для оплаты. Затем отправляем готовый сайт.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="guarantee-box">
+            <h3>🛡️ Гарантия спокойствия</h3>
+            <p>До самого дня торжества мы на связи: любые изменения в тексте, времени или ресторане вносим абсолютно
+                бесплатно.</p>
+        </div>
+    </section>
+
+    <!-- 5. Отзывы -->
+    <section class="reviews-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Отзывы счастливых пар</h2>
+                <p class="section-subtitle">Что говорят молодожены, которые уже доверили нам свои пригласительные</p>
+            </div>
+
+            <div class="reviews-carousel-container">
+                <button class="carousel-btn prev-btn" id="reviewsPrev" aria-label="Назад">‹</button>
+                <div class="reviews-track-wrapper" id="reviewsWrapper">
+                    <div class="reviews-track" id="reviewsTrack">
+
+                        <div class="review-card">
+                            <div class="review-header-top">
+                                <strong>Валерия и Максим</strong>
+                                <span class="review-stars">★★★★★</span>
+                            </div>
+                            <p class="review-text">«Замечательная девушка! Ни разу не усомнилась, что выбрала именно ее)
+                                Сделала просто супер классный сайт приглашение☺️
+                                Всегда была на связи и быстро решала возникнувшие вопросы, так же учла все пожелание🫶🏻
+                                Результатом остались довольны не только мы, но и гости, которым рассылали данное
+                                приглашение🤭»</p>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header-top">
+                                <strong>Юлия и Дмитрий</strong>
+                                <span class="review-stars">★★★★★</span>
+                            </div>
+                            <p class="review-text">«Очень профессиональная девушка. Пригласительные супер,
+                                всем очень понравилось. Не отказывала в наших многочисленных корректировках. Сильно
+                                благодарю ☺️»</p>
+                        </div>
+
+
+                        <div class="review-card">
+                            <div class="review-header-top">
+                                <strong>Карина и Арсен</strong>
+                                <span class="review-stars">★★★★★</span>
+                            </div>
+                            <p class="review-text">«Хочу выразить огромную благодарность этой девушки.Сделала все очень
+                                быстро и качественно,учла все пожелания .Цена очень радует ,хотя работа была
+                                сложной.Всем советую,мы очень довольны,спасибо ещё раз!Обращайтесь не пожалеете ❤️❤️❤️»
+                            </p>
+                        </div>
+
+                        <div class="review-card">
+                            <div class="review-header-top">
+                                <strong>Ирина</strong>
+                                <span class="review-stars">★★★★★</span>
+                            </div>
+                            <p class="review-text">«Хочу выразить огромную благодарность за создание нашего свадебного
+                                сайта-приглашения и печатной версии приглашений! Работа была выполнена очень быстро.
+                                Были учтены все наши пожелания, дизайн получился стильным, красивым и полностью отражал
+                                атмосферу нашего праздника.»</p>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="carousel-btn next-btn" id="reviewsNext" aria-label="Вперед">›</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Анкета заказа -->
+    <div class="container">
+        <section class="order-section" id="order">
+            <div class="section-header" style="margin-bottom: 20px;">
+                <h2 class="section-title">Оформить заказ</h2>
+                <p class="section-subtitle">Заполните данные,<br>
+                    и я свяжусь с вами</p>
+            </div>
+
+            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST">
+
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" name="name" placeholder="Например, Анна" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Мессенджер</label>
+                    <select name="messenger" required>
+                        <option value="" disabled selected>Выберите мессенджер</option>
+                        <option value="Telegram">Telegram</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Instagram">Instagram</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Ник / телефон</label>
+                    <input type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Выбрать тариф</label>
+                    <select name="tariff" id="tariff-select" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать тариф</option>
+                        <option value="Базовый 2 000 ₽">Базовый 2 000 ₽</option>
+                        <option value="Премиальный 3 000 ₽">Премиальный 3 000 ₽</option>
+                        <option value="Индивидуальный 5 000 ₽">Индивидуальный 5 000 ₽</option>
+                    </select>
+                </div>
+
+                <!-- ДОБАВЛЕННЫЙ БЛОК: Выбор шаблона после выбора тарифа -->
+                <div class="form-group">
+                    <label>Выбрать шаблон</label>
+                    <select name="template" id="template-select" required>
+                        <option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option>
+                        <option value="Свадьба «Classic Beige»">Свадьба «Classic Beige»</option>
+                        <option value="Свадьба «Kaaly olive»">Свадьба «Kaaly olive»</option>
+                        <option value="Свадьба «Premium Boho»">Свадьба «Premium Boho»</option>
+                        <option value="Другой шаблон из каталога">Другой шаблон из каталога</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-primary-glow"
+                    style="width: 100%; border: none; cursor: pointer; justify-content: center; margin-top: 10px;">
+                    <span>Отправить заявку</span>
+                </button>
+
+                <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.4;">
+                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html" style="color: var(--accent);">Политикой
+                        конфиденциальности</a>.
+                </p>
+            </form>
+        </section>
+    </div>
+
+    <!-- Модальное окно выбора шаблона / заказа -->
+    <div id="orderModal" class="modal-overlay" aria-hidden="true">
+        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
+            <button type="button" class="modal-close" id="closeModal" aria-label="Закрыть">✕</button>
+            <h2 id="orderModalTitle" class="modal-title">Оформить заказ</h2>
+            <p class="modal-subtitle">Выбранный шаблон уже подставлен. Заполните данные, и я свяжусь с вами.</p>
+            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST">
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" name="name" placeholder="Например, Анна" required>
+                </div>
+                <div class="form-group">
+                    <label>Мессенджер</label>
+                    <select name="messenger" required>
+                        <option value="" disabled selected>Выберите мессенджер</option>
+                        <option value="Telegram">Telegram</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Instagram">Instagram</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Ник / телефон</label>
+                    <input type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required>
+                </div>
+                <div class="form-group">
+                    <label>Выбранный шаблон</label>
+                    <input type="text" name="template" id="modal-template-input" readonly>
+                </div>
+                <button type="submit" class="modal-submit">Отправить заявку</button>
+                <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.4;">
+                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html" style="color: var(--accent);">Политикой конфиденциальности</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">LYMI</div>
+            <div class="footer-socials">
+                <a href="https://t.me/ваш_логин" target="_blank" rel="noopener">Telegram</a>
+                <a href="https://www.instagram.com/linayami_web?stkn=MTNtdXJlNGppMGp6eA%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://ru.pinterest.com/linaymi0115/" target="_blank" rel="noopener">Pinterest</a>
+            </div>
+            <p>&copy; 2026 LYMI. Электронные пригласительные нового поколения.</p>
+            <p style="font-size: 13px;">
+                <a href="privacy.html" style="color: inherit; text-decoration: underline;">Конфиденциальность</a> |
+                <a href="offer.html" style="color: inherit; text-decoration: underline;">Оферта</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Карусели: движение только по стрелкам, с переходом по кругу.
+        function initCarousel(trackId, prevBtnId, nextBtnId) {
+            const track = document.getElementById(trackId);
+            const prevBtn = document.getElementById(prevBtnId);
+            const nextBtn = document.getElementById(nextBtnId);
+            if (!track || !prevBtn || !nextBtn) return;
+
+            let index = 0;
+            const items = Array.from(track.children);
+
+            const getStep = () => {
+                if (!items.length) return 0;
+                const item = items[0];
+                const gap = parseFloat(getComputedStyle(track).gap) || 0;
+                return item.getBoundingClientRect().width + gap;
+            };
+
+            const move = (direction) => {
+                if (!items.length) return;
+                index = (index + direction + items.length) % items.length;
+                const step = getStep();
+                const wrapper = track.parentElement;
+                const maxScroll = Math.max(0, track.scrollWidth - wrapper.clientWidth);
+                let target = index * step;
+                // Если карточек меньше ширины окна, стрелка всё равно работает по кругу.
+                if (maxScroll > 0) target = Math.min(target, maxScroll);
+                track.parentElement.scrollTo({ left: target, behavior: 'smooth' });
+                if (index === items.length - 1 && target < maxScroll) {
+                    // На следующем клике цикл продолжается с первой карточки.
+                }
+            };
+
+            nextBtn.addEventListener('click', () => move(1));
+            prevBtn.addEventListener('click', () => move(-1));
+        }
+
+        initCarousel('templatesTrack', 'templatesPrev', 'templatesNext');
+        initCarousel('tariffsTrack', 'tariffsPrev', 'tariffsNext');
+        initCarousel('reviewsTrack', 'reviewsPrev', 'reviewsNext');
+    </script>
+</body>
+
+</html>

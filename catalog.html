@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог шаблонов — LYMI</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        header {
+            margin-bottom: 0 !important;
+        }
+
+        .catalog-hero {
+            padding: 10px 16px 5px !important;
+            margin-top: 0 !important;
+            text-align: center;
+        }
+
+        .catalog-hero .section-title {
+            font-size: 24px;
+            margin-top: 0 !important;
+            margin-bottom: 4px !important;
+        }
+
+        .catalog-hero .section-subtitle {
+            font-size: 13px;
+            margin-bottom: 14px !important;
+            color: var(--gray);
+        }
+
+        .catalog-navigation {
+            max-width: 700px;
+            margin: 0 auto 15px !important;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .tariff-tabs-compact {
+            display: flex;
+            background: #f1f3f5;
+            padding: 4px;
+            border-radius: 12px;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .tariff-tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            cursor: pointer;
+            border-radius: 9px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .tariff-tab-btn span {
+            font-size: 12px;
+            font-weight: 400;
+            opacity: 0.7;
+        }
+
+        .tariff-tab-btn.active {
+            background: #fff;
+            color: var(--text-color);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .event-filters-inline {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0;
+            font-size: 13px;
+        }
+
+        .filter-btn-inline {
+            background: none;
+            border: none;
+            padding: 4px 10px;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .filter-btn-inline:hover,
+        .filter-btn-inline.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .filter-divider {
+            color: #d1d5db;
+            font-weight: 300;
+            user-select: none;
+        }
+
+        .card-meta-info {
+            font-size: 12px;
+            color: #888;
+            margin-top: 10px;
+            display: block;
+            letter-spacing: 0.3px;
+        }
+
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* Контейнер для картинки внутри карточки */
+        .card-image-box {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 12px 12px 0 0;
+            background-color: #f8f9fa;
+        }
+
+        /* Сама картинка */
+        .card-image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover .card-image-box img {
+            transform: scale(1.05);
+        }
+
+        /* Стили для кнопок в карточке */
+        .card-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .card-actions .btn-outline {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            border: 1px solid var(--text-color);
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: background 0.2s ease;
+        }
+
+        .card-actions .btn-outline:hover {
+            background: #f1f3f5;
+        }
+
+        .card-actions .select-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Шапка сайта -->
+    <header>
+        <div class="logo"><a href="index.html" style="text-decoration: none; color: inherit;">LYMI</a></div>
+
+        <button class="burger-btn" id="menuToggle" aria-label="Открыть меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav id="mainNav">
+            <a href="index.html">Главная</a>
+            <a href="catalog.html" class="active">Каталог (20+)</a>
+            <a href="tariffs.html">Тарифы</a>
+            <a href="about.html">О студии</a>
+        </nav>
+
+        <div class="header-actions">
+            <a href="index.html#order" class="btn-header">Заказать</a>
+        </div>
+    </header>
+
+    <!-- Фильтры каталога -->
+    <section class="catalog-hero">
+        <div class="container">
+            <h1 class="section-title">Каталог шаблонов</h1>
+            <p class="section-subtitle">Выберите формат и стиль для вашего события</p>
+
+            <div class="catalog-navigation">
+                <div class="tariff-tabs-compact" id="tariffTabs">
+                    <button class="tariff-tab-btn active" data-tariff="base">Базовые <span>(2 000 ₽)</span></button>
+                    <button class="tariff-tab-btn" data-tariff="premium">Премиум <span>(3 000 ₽)</span></button>
+                </div>
+
+                <div class="event-filters-inline" id="eventFilters">
+                    <button class="filter-btn-inline active" data-event="all">Все</button>
+                    <span class="filter-divider">|</span>
+                    <button class="filter-btn-inline" data-event="wedding">Свадьба</button>
+                    <span class="filter-divider">|</span>
+                    <button class="filter-btn-inline" data-event="birthday">День рождения</button>
+                    <span class="filter-divider">|</span>
+                    <button class="filter-btn-inline" data-event="other">Другое</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Сетка шаблонов -->
+    <main class="container">
+        <div class="catalog-grid" id="catalogGrid">
+
+            <!-- Базовый Шаблон 1 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b1.png" alt="Базовый шаблон 1" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №1</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/kirillandkarina/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №1">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 2 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b2.png" alt="Базовый шаблон 2" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №2</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/shan/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №2">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 3 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b3.png" alt="Базовый шаблон 3" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №3</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/davidandarina/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №3">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 4 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b4.png" alt="Базовый шаблон 4" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №4</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/vyacheslavkamely/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №4">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 5 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b5.png" alt="Базовый шаблон 5" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №5</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://example.com/preview5" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №5">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 6 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b6.png" alt="Базовый шаблон 6" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №6</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/ssfdf/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №6">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 7 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b7.png" alt="Базовый шаблон 7" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №7</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/kirillandsvetlana/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №7">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 8 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b8.png" alt="Базовый шаблон 8" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №8</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/namename/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №8">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 9 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b9.png" alt="Базовый шаблон 9" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №9</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/levandlolita/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №9">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 10 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b10.png" alt="Базовый шаблон 10" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №10</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/sgui/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №10">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Базовый Шаблон 11 -->
+            <div class="card" data-tariff="base" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/b11.png" alt="Базовый шаблон 11" loading="lazy">
+                    <span class="card-tag">Базовый</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Шаблон №11</h3>
+                    <p class="card-desc">Классический дизайн для вашего события</p>
+                    <div class="card-price">2 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/dgfdfgdf/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Базовый шаблон №11">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Премиум Шаблон 1 -->
+            <div class="card" data-tariff="premium" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/p1.png" alt="Премиум шаблон 1" loading="lazy">
+                    <span class="card-tag premium-tag">Премиум</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Премиум №1</h3>
+                    <p class="card-desc">Эксклюзивный дизайн и расширенный функционал</p>
+                    <div class="card-price">3 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/ArsenandElen/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Премиум шаблон №1">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Премиум Шаблон 2 -->
+            <div class="card" data-tariff="premium" data-event="wedding">
+                <div class="card-image-box">
+                    <img src="images/p2.png" alt="Премиум шаблон 2" loading="lazy">
+                    <span class="card-tag premium-tag">Премиум</span>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Премиум №2</h3>
+                    <p class="card-desc">Эксклюзивный дизайн и расширенный функционал</p>
+                    <div class="card-price">3 000 ₽</div>
+                    <div class="card-actions">
+                        <a href="https://linamya.github.io/mikhailandvictoria/" target="_blank" class="btn-outline">Превью</a>
+                        <button class="btn-primary-glow select-btn" data-template="Премиум шаблон №2">Выбрать</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">LYMI</div>
+            <div class="footer-socials">
+                <a href="https://t.me/ваш_логин" target="_blank">Telegram</a>
+                <a href="https://instagram.com/ваш_логин" target="_blank">Instagram</a>
+            </div>
+            <p>&copy; 2026 LYMI. Электронные пригласительные нового поколения.</p>
+            <p style="font-size: 13px;">
+                <a href="privacy.html" style="color: inherit; text-decoration: underline;">Конфиденциальность</a> |
+                <a href="offer.html" style="color: inherit; text-decoration: underline;">Оферта</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Модальное окно с формой заказа -->
+    <div id="orderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 15px;">
+        <div style="background: #fff; padding: 30px; border-radius: 16px; max-width: 500px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto;">
+            <button id="closeModal" style="position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 24px; cursor: pointer;">&times;</button>
+            
+            <div style="margin-bottom: 20px; text-align: center;">
+                <h2 style="font-size: 22px; margin-bottom: 5px;">Оформить заказ</h2>
+                <p style="font-size: 13px; color: var(--gray);">Заполните данные, и я свяжусь с вами</p>
+            </div>
+
+            <form action="https://formspree.io/f/ВАШ_КОД_FORMSPREE" method="POST">
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Имя</label>
+                    <input type="text" name="name" placeholder="Например, Анна" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Мессенджер</label>
+                    <select name="messenger" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; background: #fff;">
+                        <option value="" disabled selected>Выберите мессенджер</option>
+                        <option value="Telegram">Telegram</option>
+                        <option value="WhatsApp">WhatsApp</option>
+                        <option value="Instagram">Instagram</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Ник / телефон</label>
+                    <input type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: 500; font-size: 14px;">Выбранный шаблон</label>
+                    <input type="text" name="template" id="modal-template-input" readonly style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; box-sizing: border-box;">
+                </div>
+
+                <button type="submit" class="btn-primary-glow" style="width: 100%; padding: 12px; border: none; cursor: pointer; border-radius: 8px; font-weight: 600;">
+                    <span>Отправить заявку</span>
+                </button>
+
+                <p style="font-size: 11px; color: var(--gray); text-align: center; margin-top: 12px; line-height: 1.4;">
+                    Нажимая кнопку, вы соглашаетесь с <a href="privacy.html" style="color: var(--accent);">Политикой конфиденциальности</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        const tariffTabs = document.querySelectorAll('.tariff-tab-btn');
+        const eventFilters = document.querySelectorAll('.event-filters-inline .filter-btn-inline');
+        const cards = document.querySelectorAll('.catalog-grid .card');
+
+        let currentTariff = 'base';
+        let currentEvent = 'all';
+
+        function filterCatalog() {
+            cards.forEach(card => {
+                const cardTariff = card.getAttribute('data-tariff');
+                const cardEvent = card.getAttribute('data-event');
+
+                const matchesTariff = cardTariff === currentTariff;
+                const matchesEvent = currentEvent === 'all' || cardEvent === currentEvent;
+
+                card.classList.toggle('catalog-card-hidden', !(matchesTariff && matchesEvent));
+            });
+        }
+
+        tariffTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tariffTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                currentTariff = tab.getAttribute('data-tariff');
+                filterCatalog();
+            });
+        });
+
+        eventFilters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                eventFilters.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentEvent = btn.getAttribute('data-event');
+                filterCatalog();
+            });
+        });
+
+        filterCatalog();
+
+        // Управление модальным окном заказа
+        document.addEventListener('DOMContentLoaded', () => {
+            const modal = document.getElementById('orderModal');
+            const closeModal = document.getElementById('closeModal');
+            const templateInput = document.getElementById('modal-template-input');
+            const selectButtons = document.querySelectorAll('.select-btn');
+
+            selectButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const templateName = button.getAttribute('data-template');
+                    if (templateInput) {
+                        templateInput.value = templateName;
+                    }
+                    if (modal) {
+                        modal.style.display = 'flex';
+                    }
+                });
+            });
+
+            if (closeModal) {
+                closeModal.addEventListener('click', () => {
+                    modal.style.display = 'none';
+                });
+            }
+
+            if (modal) {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
