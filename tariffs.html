@@ -9,9 +9,9 @@
     <style>
         .tariffs-carousel-wrapper {
             position: relative;
-            max-width: 380px;
+            width: min(100%, 960px);
             margin: 0 auto;
-            padding: 10px 46px 30px;
+            padding: 10px 52px 30px;
             box-sizing: border-box;
         }
 
@@ -25,6 +25,7 @@
             -ms-overflow-style: none;
             touch-action: pan-x;
             scroll-snap-type: x mandatory;
+            padding: 0;
         }
 
         .tariffs-grid::-webkit-scrollbar {
@@ -34,45 +35,33 @@
         .tariff-card {
             flex: 0 0 100%;
             width: 100%;
-            max-width: 380px;
+            max-width: 520px;
+            min-width: 0;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            margin: 0;
+            margin: 0 auto;
             scroll-snap-align: center;
         }
 
         .tariff-card .select-btn {
             width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            border: none;
-            background: var(--primary);
-            color: #fff;
-            transition: opacity 0.2s;
             box-sizing: border-box;
             display: block;
             margin-top: 20px;
-        }
-
-        .tariff-card .select-btn:hover {
-            opacity: 0.9;
         }
 
         .carousel-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            width: 42px;
-            height: 42px;
+            width: 44px;
+            height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 0;
             border-radius: 50%;
             background: var(--carousel-arrow-bg, #fff);
             border: 1px solid var(--carousel-arrow-border, #D6A64D);
@@ -80,9 +69,8 @@
             font-size: 28px;
             line-height: 1;
             cursor: pointer;
-            z-index: 10;
-            padding: 0;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+            z-index: 20;
+            box-shadow: 0 4px 15px rgba(0,0,0,.12);
         }
 
         .carousel-arrow:hover {
@@ -90,13 +78,8 @@
             color: var(--carousel-arrow-hover-icon, #fff);
         }
 
-        .carousel-arrow.prev {
-            left: 0;
-        }
-
-        .carousel-arrow.next {
-            right: 0;
-        }
+        .carousel-arrow.prev { left: 4px; }
+        .carousel-arrow.next { right: 4px; }
 
         .carousel-dots {
             display: flex;
@@ -113,24 +96,20 @@
             border: none;
             cursor: pointer;
             padding: 0;
-            transition: background 0.2s, width 0.2s;
+            transition: background .2s, width .2s;
         }
 
         .dot.active {
-            background: var(--primary);
+            background: var(--primary, #D6A64D);
             width: 24px;
             border-radius: 4px;
         }
 
         @media (min-width: 768px) {
             .tariffs-carousel-wrapper {
-                max-width: 900px;
-                padding: 10px 48px 30px;
-            }
-
-            .tariffs-grid {
-                gap: 24px;
-                scroll-snap-type: x mandatory;
+                width: min(100%, 960px);
+                padding-left: 52px;
+                padding-right: 52px;
             }
 
             .tariff-card {
@@ -145,14 +124,23 @@
 
         @media (max-width: 767px) {
             .tariffs-carousel-wrapper {
-                padding-left: 46px;
-                padding-right: 46px;
+                width: 100%;
+                padding-left: 52px;
+                padding-right: 52px;
+            }
+
+            .tariff-card {
+                flex-basis: 100%;
+                max-width: 100%;
             }
 
             .carousel-arrow {
-                width: 40px;
-                height: 40px;
+                width: 42px;
+                height: 42px;
             }
+
+            .carousel-arrow.prev { left: 5px; }
+            .carousel-arrow.next { right: 5px; }
         }
     </style>
 </head>
@@ -355,143 +343,138 @@
 
     <script src="script.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const track = document.getElementById('tariffsTrack');
-            const wrapper = track;
-            const prevBtn = document.getElementById('prevBtn');
-            const nextBtn = document.getElementById('nextBtn');
-            const dots = document.querySelectorAll('.dot');
+    document.addEventListener('DOMContentLoaded', function () {
+        const track = document.getElementById('tariffsTrack');
+        const wrapper = track ? track.parentElement : null;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const dots = Array.from(document.querySelectorAll('.dot'));
 
-            if (!track || !prevBtn || !nextBtn) return;
+        if (!track || !wrapper || !prevBtn || !nextBtn) return;
 
-            const originalCards = Array.from(track.children);
-            const total = originalCards.length;
+        const originals = Array.from(track.children);
+        const total = originals.length;
 
-            if (total <= 1) return;
+        if (total <= 1) return;
 
-            // Создаём копии с двух сторон, чтобы переход был бесшовным.
-            const beforeClones = originalCards.map(card => card.cloneNode(true));
-            const afterClones = originalCards.map(card => card.cloneNode(true));
+        // Клоны слева и справа дают действительно бесшовный цикл.
+        originals.map(card => card.cloneNode(true)).reverse()
+            .forEach(card => track.insertBefore(card, track.firstChild));
+        originals.map(card => card.cloneNode(true))
+            .forEach(card => track.appendChild(card));
 
-            beforeClones.reverse().forEach(card => track.insertBefore(card, track.firstChild));
-            afterClones.forEach(card => track.appendChild(card));
+        let currentIndex = total;
+        let moving = false;
+        let timer = null;
 
-            let currentIndex = total;
-            let isMoving = false;
-            let normalizeTimer;
+        function targetLeft(index) {
+            const card = track.children[index];
+            if (!card) return 0;
 
-            function getTargetLeft(index) {
-                const card = track.children[index];
-                if (!card) return 0;
+            // Центрируем карточку относительно видимой области wrapper.
+            return Math.max(
+                0,
+                card.offsetLeft - (wrapper.clientWidth - card.offsetWidth) / 2
+            );
+        }
 
-                return Math.max(
-                    0,
-                    card.offsetLeft - (wrapper.clientWidth - card.offsetWidth) / 2
-                );
-            }
+        function moveTo(index, smooth = true) {
+            if (!track.children[index]) return;
 
-            function moveTo(index, smooth = true) {
-                const target = getTargetLeft(index);
-
-                wrapper.scrollTo({
-                    left: target,
-                    behavior: smooth ? 'smooth' : 'auto'
-                });
-            }
-
-            function updateDots() {
-                const realIndex = ((currentIndex - total) % total + total) % total;
-
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === realIndex);
-                });
-            }
-
-            function normalize() {
-                if (currentIndex >= total * 2) {
-                    currentIndex -= total;
-                    moveTo(currentIndex, false);
-                } else if (currentIndex < total) {
-                    currentIndex += total;
-                    moveTo(currentIndex, false);
-                }
-
-                updateDots();
-            }
-
-            requestAnimationFrame(() => {
-                moveTo(currentIndex, false);
-                updateDots();
+            wrapper.scrollTo({
+                left: targetLeft(index),
+                behavior: smooth ? 'smooth' : 'auto'
             });
+        }
 
-            function go(direction) {
-                if (isMoving) return;
+        function realIndex() {
+            return ((currentIndex - total) % total + total) % total;
+        }
 
-                isMoving = true;
-                currentIndex += direction;
-                updateDots();
+        function updateDots() {
+            const index = realIndex();
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+        }
+
+        function normalize() {
+            if (currentIndex >= total * 2) {
+                currentIndex -= total;
+                moveTo(currentIndex, false);
+            } else if (currentIndex < total) {
+                currentIndex += total;
+                moveTo(currentIndex, false);
+            }
+            updateDots();
+        }
+
+        function go(direction) {
+            if (moving) return;
+
+            moving = true;
+            currentIndex += direction;
+            updateDots();
+            moveTo(currentIndex, true);
+
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                normalize();
+                moving = false;
+            }, 550);
+        }
+
+        prevBtn.addEventListener('click', () => go(-1));
+        nextBtn.addEventListener('click', () => go(1));
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (moving) return;
+                currentIndex = total + index;
                 moveTo(currentIndex, true);
+                updateDots();
 
-                clearTimeout(normalizeTimer);
-                normalizeTimer = setTimeout(() => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
                     normalize();
-                    isMoving = false;
-                }, 500);
-            }
-
-            nextBtn.addEventListener('click', () => go(1));
-            prevBtn.addEventListener('click', () => go(-1));
-
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    if (isMoving) return;
-
-                    currentIndex = total + index;
-                    updateDots();
-                    moveTo(currentIndex, true);
-
-                    clearTimeout(normalizeTimer);
-                    normalizeTimer = setTimeout(() => {
-                        normalize();
-                        isMoving = false;
-                    }, 500);
-                });
-            });
-
-            // После ручного свайпа центрируем ближайшую карточку.
-            let scrollTimer;
-
-            wrapper.addEventListener('scroll', () => {
-                if (isMoving) return;
-
-                clearTimeout(scrollTimer);
-
-                scrollTimer = setTimeout(() => {
-                    let closestIndex = currentIndex;
-                    let closestDistance = Infinity;
-
-                    Array.from(track.children).forEach((card, index) => {
-                        const distance = Math.abs(
-                            wrapper.scrollLeft - getTargetLeft(index)
-                        );
-
-                        if (distance < closestDistance) {
-                            closestDistance = distance;
-                            closestIndex = index;
-                        }
-                    });
-
-                    currentIndex = closestIndex;
-                    moveTo(currentIndex, true);
-
-                    setTimeout(normalize, 450);
-                }, 100);
-            });
-
-            window.addEventListener('resize', () => {
-                moveTo(currentIndex, false);
+                    moving = false;
+                }, 550);
             });
         });
+
+        let scrollTimer = null;
+
+        // Ручной свайп: после остановки выбираем ближайшую карточку и центрируем её.
+        wrapper.addEventListener('scroll', () => {
+            if (moving) return;
+
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                let closest = currentIndex;
+                let distance = Infinity;
+
+                Array.from(track.children).forEach((card, index) => {
+                    const d = Math.abs(wrapper.scrollLeft - targetLeft(index));
+                    if (d < distance) {
+                        distance = d;
+                        closest = index;
+                    }
+                });
+
+                currentIndex = closest;
+                moveTo(currentIndex, true);
+
+                setTimeout(normalize, 450);
+            }, 120);
+        });
+
+        requestAnimationFrame(() => {
+            moveTo(currentIndex, false);
+            updateDots();
+        });
+
+        window.addEventListener('resize', () => {
+            moveTo(currentIndex, false);
+        });
+    });
     </script>
 </body>
 </html>
