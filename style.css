@@ -505,8 +505,6 @@ header nav a.active {
     -ms-overflow-style: none;
     width: 100%;
     padding: 10px 55px;
-    overscroll-behavior-x: contain;
-    -webkit-overflow-scrolling: touch;
 }
 
 .carousel-track-wrapper::-webkit-scrollbar,
@@ -529,16 +527,22 @@ header nav a.active {
     background: var(--carousel-arrow-bg);
     border: 1px solid var(--carousel-arrow-border);
     color: var(--carousel-arrow-icon);
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    font-size: 28px;
+    font-size: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 10;
     transition: var(--animation-speed);
+    width: 42px;
+    height: 42px;
+    font-size: 28px;
+    background: var(--carousel-arrow-bg);
+    border: 1px solid var(--carousel-arrow-border);
+    color: var(--carousel-arrow-icon);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
 }
 
@@ -578,11 +582,9 @@ header nav a.active {
 }
 
 .card-img {
-    display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center;
+    object-fit: contain;
     background-color: #877f6c;
 }
 
@@ -1070,11 +1072,26 @@ textarea {
 }
 
 input:focus,
+input:active,
 select:focus,
-textarea:focus {
+select:active,
+textarea:focus,
+textarea:active {
     outline: none;
     border-color: var(--form-input-focus-border);
-    background: var(--form-input-focus-bg);
+    background: var(--form-input-bg) !important;
+    color: var(--form-input-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+    opacity: 1;
+}
+
+select option {
+    background: var(--form-input-bg);
+    color: var(--form-input-text);
 }
 
 /* ========================================================================== /
@@ -1177,33 +1194,29 @@ footer {
     .hero {
         padding-top: 100px;
     }
-
     .carousel-btn {
-        display: flex;
-        width: 36px;
-        height: 36px;
-        font-size: 24px;
-    }
+    display: flex;
+    width: 36px;
+    height: 36px;
+    font-size: 24px;
+}
 
-    .prev-btn {
-        left: 4px;
-    }
+.prev-btn {
+    left: 4px;
+}
 
-    .next-btn {
-        right: 4px;
-    }
+.next-btn {
+    right: 4px;
+}
 
-    .carousel-track-wrapper,
-    .tariffs-track-wrapper,
-    .reviews-track-wrapper {
-        padding: 10px 42px;
-    }
+.carousel-track-wrapper,
+.tariffs-track-wrapper,
+.reviews-track-wrapper {
+    padding-left: 45px;
+    padding-right: 45px;
+}
 
-    .carousel-track,
-    .tariffs-track,
-    .reviews-track {
-        align-items: stretch;
-    }
+
 }
 
 @media (max-width: 768px) {
