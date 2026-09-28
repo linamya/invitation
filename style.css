@@ -1194,8 +1194,13 @@ footer {
     .carousel-track-wrapper,
     .tariffs-track-wrapper,
     .reviews-track-wrapper {
-        padding-left: 45px;
-        padding-right: 45px;
+        padding: 10px 42px;
+    }
+
+    .carousel-track,
+    .tariffs-track,
+    .reviews-track {
+        align-items: stretch;
     }
 }
 
