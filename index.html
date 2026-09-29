@@ -592,5 +592,21 @@
         document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal&&modal.classList.contains('active'))closeOrderModal();});
     });
     </script>
+    <script>
+  // Запрет контекстного меню (правой кнопки мыши)
+  document.addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+  });
+
+  // Запрет комбинаций клавиш Ctrl+C, Ctrl+U (просмотр кода), F12 (консоль)
+  document.addEventListener('keydown', function(e) {
+    if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's')) {
+      e.preventDefault();
+    }
+    if (e.key === 'F12') {
+      e.preventDefault();
+    }
+  });
+</script>
 </body>
 </html>
