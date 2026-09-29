@@ -103,7 +103,7 @@
                             <div class="card-actions">
                                 <a href="https://linamya.github.io/kirillandkarina/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
                                 <a href="#" class="btn-card select-btn"
-                                    data-template="Свадьба «Classic Beige»">Выбрать</a>
+                                    data-template="Базовый №1">Выбрать</a>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@
                             <div class="card-actions">
                                 <a href="https://linamya.github.io/namename/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
                                 <a href="#" class="btn-card select-btn"
-                                    data-template="Свадьба «Kaaly olive»">Выбрать</a>
+                                    data-template="Базовый №8">Выбрать</a>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,7 @@
                             <div class="card-actions">
                                 <a href="https://linamya.github.io/ArsenandElen/" target="_blank" rel="noopener" class="btn-outline">Превью</a>
                                 <a href="#" class="btn-card select-btn"
-                                    data-template="Свадьба «Premium Boho»">Выбрать</a>
+                                    data-template="Премиум №1">Выбрать</a>
                             </div>
                         </div>
                     </div>
@@ -420,12 +420,8 @@
                 <!-- ДОБАВЛЕННЫЙ БЛОК: Выбор шаблона после выбора тарифа -->
                 <div class="form-group">
                     <label>Выбрать шаблон</label>
-                    <select name="template" id="template-select" required>
-                        <option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option>
-                        <option value="Свадьба «Classic Beige»">Свадьба «Classic Beige»</option>
-                        <option value="Свадьба «Kaaly olive»">Свадьба «Kaaly olive»</option>
-                        <option value="Свадьба «Premium Boho»">Свадьба «Premium Boho»</option>
-                        <option value="Другой шаблон из каталога">Другой шаблон из каталога</option>
+                    <select name="template" id="template-select" required disabled>
+                        <option value="" disabled selected>Сначала выберите тариф</option>
                     </select>
                 </div>
 
@@ -455,7 +451,7 @@
                 <div class="form-group"><label for="modal-messenger">Мессенджер</label><select id="modal-messenger" name="messenger" required><option value="" disabled selected>Выберите мессенджер</option><option value="Telegram">Telegram</option><option value="WhatsApp">WhatsApp</option><option value="Instagram">Instagram</option></select></div>
                 <div class="form-group"><label for="modal-contact">Ник / телефон</label><input id="modal-contact" type="text" name="contact_handle" placeholder="@username или ваш номер телефона" required></div>
                 <div class="form-group"><label for="modal-tariff">Выбрать тариф</label><select id="modal-tariff" name="tariff" required><option value="" disabled selected>Нажмите, чтобы выбрать тариф</option><option value="Базовый 2 000 ₽">Базовый 2 000 ₽</option><option value="Премиальный 3 000 ₽">Премиальный 3 000 ₽</option><option value="Индивидуальный 5 000 ₽">Индивидуальный 5 000 ₽</option></select></div>
-                <div class="form-group"><label for="modal-template">Выбрать шаблон</label><select id="modal-template" name="template" required><option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option><option value="Свадьба «Classic Beige»">Свадьба «Classic Beige»</option><option value="Свадьба «Kaaly olive»">Свадьба «Kaaly olive»</option><option value="Свадьба «Premium Boho»">Свадьба «Premium Boho»</option><option value="Другой шаблон из каталога">Другой шаблон из каталога</option></select></div>
+                <div class="form-group"><label for="modal-template">Выбрать шаблон</label><select id="modal-template" name="template" required disabled><option value="" disabled selected>Сначала выберите тариф</option></select></div>
                 <button type="submit" class="btn-primary-glow modal-submit"><span>Отправить заявку</span></button>
                 <p class="modal-privacy">Нажимая кнопку, вы соглашаетесь с <a href="privacy.html">Политикой конфиденциальности</a>.</p>
             </form>
@@ -482,6 +478,61 @@
     <script src="script.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Данные шаблонов для каждого тарифа
+        const templatesByTariff = {
+            'Базовый 2 000 ₽': [
+                'Базовый №1', 'Базовый №2', 'Базовый №3', 'Базовый №4',
+                'Базовый №5', 'Базовый №6', 'Базовый №7', 'Базовый №8',
+                'Базовый №9', 'Базовый №10', 'Базовый №11'
+            ],
+            'Премиальный 3 000 ₽': [
+                'Премиум №1', 'Премиум №2'
+            ],
+            'Индивидуальный 5 000 ₽': [
+                'Индивидуальный'
+            ]
+        };
+
+        // Функция обновления списка шаблонов
+        function updateTemplateOptions(tariffSelect, templateSelect, selectedTemplateValue = '') {
+            if (!tariffSelect || !templateSelect) return;
+
+            const selectedTariff = tariffSelect.value;
+            const templates = templatesByTariff[selectedTariff] || [];
+
+            templateSelect.innerHTML = '<option value="" disabled selected>Нажмите, чтобы выбрать шаблон</option>';
+
+            if (templates.length > 0) {
+                templateSelect.disabled = false;
+                templates.forEach(function (tpl) {
+                    const opt = document.createElement('option');
+                    opt.value = tpl;
+                    opt.textContent = tpl;
+                    if (tpl === selectedTemplateValue) {
+                        opt.selected = true;
+                    }
+                    templateSelect.appendChild(opt);
+                });
+            } else {
+                templateSelect.disabled = true;
+            }
+        }
+
+        // Связываем переключение тарифа со списком шаблонов
+        function bindTariffEvents(tariffId, templateId) {
+            const tariffSelect = document.getElementById(tariffId);
+            const templateSelect = document.getElementById(templateId);
+
+            if (tariffSelect && templateSelect) {
+                tariffSelect.addEventListener('change', function () {
+                    updateTemplateOptions(tariffSelect, templateSelect);
+                });
+            }
+        }
+
+        bindTariffEvents('tariff-select', 'template-select');
+        bindTariffEvents('modal-tariff', 'modal-template');
+
         function initInfiniteCarousel(trackId, prevBtnId, nextBtnId) {
             const track=document.getElementById(trackId), prevBtn=document.getElementById(prevBtnId), nextBtn=document.getElementById(nextBtnId);
             if(!track||!prevBtn||!nextBtn||track.dataset.carouselReady==='true') return;
@@ -507,8 +558,26 @@
         const modal=document.getElementById('orderModal'), close=document.getElementById('closeModal'), tariff=document.getElementById('modal-tariff'), template=document.getElementById('modal-template');
         function openOrderModal(selection){
             if(!modal)return;
-            if(selection&&selection.indexOf('Тариф:')===0){const name=selection.replace('Тариф: ','').trim();const option=Array.from(tariff.options).find(o=>o.value.startsWith(name));if(option)tariff.value=option.value;}
-            if(selection&&selection.indexOf('Свадьба')===0){const option=Array.from(template.options).find(o=>o.value===selection);if(option)template.value=option.value;}
+            if(selection){
+                if(selection.indexOf('Тариф:')===0){
+                    const name=selection.replace('Тариф: ','').trim();
+                    const option=Array.from(tariff.options).find(o=>o.value.startsWith(name));
+                    if(option){
+                        tariff.value=option.value;
+                        updateTemplateOptions(tariff, template);
+                    }
+                } else {
+                    let targetTariff = '';
+                    if (selection.indexOf('Базовый') !== -1) targetTariff = 'Базовый 2 000 ₽';
+                    else if (selection.indexOf('Премиум') !== -1) targetTariff = 'Премиальный 3 000 ₽';
+                    else if (selection.indexOf('Индивидуальный') !== -1) targetTariff = 'Индивидуальный 5 000 ₽';
+
+                    if (targetTariff) {
+                        tariff.value = targetTariff;
+                        updateTemplateOptions(tariff, template, selection);
+                    }
+                }
+            }
             modal.classList.add('active');modal.setAttribute('aria-hidden','false');document.body.classList.add('modal-open');setTimeout(()=>document.getElementById('modal-name')?.focus(),100);
         }
         function closeOrderModal(){if(!modal)return;modal.classList.remove('active');modal.setAttribute('aria-hidden','true');document.body.classList.remove('modal-open');}
